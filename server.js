@@ -16,10 +16,9 @@ app.get('/qormaata', (req, res) => {
     res.sendFile(path.join(__dirname, 'qormaata.html'));
 });
 
-// --- SADDARKAA HAARAA: Kuusaa Deetaa MySQL Clever Cloud Online Wal-qunnamsiisuu ---
-// Ragaaleen kun dhibba dhibbatti teessoo haaraa Clever Cloud irraa argame kanaan to'atamanii jiru
+// --- SADDARKAA SIRREEFFAMAA: Host guutummaatti sirreeffameera ---
 const db = mysql.createConnection({
-    host: '://clever-cloud.com',       
+    host: 'byaolahodhgmbpyqhb5u-mysql.services.clever-cloud.com',       
     user: 'uoly3lagqinw20jv',            
     password: 'byaolahodhgmbpyqhb5u',    
     database: 'byaolahodhgmbpyqhb5u'
