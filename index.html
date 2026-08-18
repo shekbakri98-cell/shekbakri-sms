@@ -6,51 +6,56 @@
     <title>Shek Bekri Sapalo Secondary School</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background-color: #0f172a; color: #f8fafc; font-family: sans-serif; min-height: 100vh; display: flex; flex-direction: column; }
+        body { background-color: #7c5295; color: #fff; font-family: sans-serif; min-height: 100vh; display: flex; flex-direction: column; }
         #loginPage { display: flex; align-items: center; justify-content: center; min-height: 100vh; }
-        .login-box { background-color: #1e293b; padding: 40px; border: 1px solid #334155; width: 100%; max-width: 400px; border-radius: 12px; }
-        .login-box h1 { text-align: center; color: #facc15; margin-bottom: 24px; }
-        .form-group { margin-bottom: 16px; }
-        .form-group label { display: block; font-size: 0.875rem; color: #94a3b8; margin-bottom: 6px; }
-        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 12px; border-radius: 6px; background-color: #0f172a; border: 1px solid #475569; color: #fff; outline: none; }
-        .btn-cyan { width: 100%; background-color: #06b6d4; color: #0f172a; padding: 12px; border: none; border-radius: 6px; font-weight: 700; cursor: pointer; }
-        .btn-nav { width: 100%; text-align: left; padding: 12px; border: none; background: none; color: #f8fafc; font-size: 1rem; cursor: pointer; }
-        .btn-nav.active { color: #facc15; background-color: #1e293b; }
-        .btn-logout { background-color: rgba(127, 29, 29, 0.4); color: #f87171; margin-top: 40px; padding: 12px; border-radius: 6px; text-align: center; cursor: pointer; }
+        .login-box { background-color: #7c5295; padding: 30px; border: 3px solid #000; width: 100%; max-width: 440px; }
+        .login-banner { background-color: #ffedd5; color: #7c5295; font-size: 2.3rem; font-weight: bold; text-align: center; padding: 12px; margin-bottom: 20px; }
+        .access-group { display: flex; align-items: center; margin-bottom: 12px; gap: 10px; }
+        .access-group label { width: 120px; background-color: #ffedd5; color: #475569; padding: 8px; font-weight: bold; font-size: 0.9rem; }
+        .access-group input, .access-group select, .access-group textarea { flex: 1; padding: 8px; border: 2px solid #cbd5e1; color: #000; background-color: #fff; outline: none; }
+        .btn-access-login { width: 100%; background-color: #0ea5e9; color: #000; padding: 10px; border: 2px solid #000; font-size: 1.3rem; font-weight: bold; cursor: pointer; }
         #appPage { display: none; flex-direction: column; flex: 1; }
-        header { background-color: #0891b2; color: #0f172a; text-align: center; padding: 16px; font-weight: 900; }
+        header { background-color: #0ea5e9; color: #000; font-size: 1.3rem; font-weight: 900; padding: 12px; border-bottom: 3px solid #000; }
         .app-container { display: flex; flex: 1; }
-        nav { width: 260px; background-color: #1e293b; padding: 20px; display: flex; flex-direction: column; gap: 8px; }
-        main { flex: 1; padding: 30px; overflow-y: auto; }
+        nav { width: 240px; background-color: #4a2e6d; padding: 15px; display: flex; flex-direction: column; gap: 10px; }
+        .btn-nav-access { width: 100%; background-color: #84cc16; color: #000; font-weight: bold; padding: 10px; border: 2px solid #000; cursor: pointer; }
+        .btn-nav-orange { background-color: #f97316; }
+        .btn-nav-yellow { background-color: #eab308; }
+        .btn-nav-close { background-color: #b91c1c; color: #fff; margin-top: 20px; }
+        main { flex: 1; padding: 25px; background-color: #7c5295; overflow-y: auto; }
         .hidden { display: none !important; }
-        .section-title { font-size: 1.75rem; color: #facc15; margin-bottom: 20px; padding-bottom: 10px; border-b: 1px solid #334155; }
-        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
-        .card { background-color: #1e293b; padding: 24px; border-radius: 10px; border: 1px solid #334155; }
-        .card h3 { font-size: 2.25rem; color: #22d3ee; margin-top: 8px; }
-        .opt-btn { width: 100%; text-align: left; padding: 14px; background-color: #0f172a; border: 1px solid #475569; color: #fff; border-radius: 8px; cursor: pointer; margin-bottom: 8px; }
-        .quiz-footer { display: flex; justify-content: space-between; margin-top: 20px; }
-        .btn-action { padding: 10px 24px; border: none; border-radius: 6px; color: white; font-weight: bold; cursor: pointer; }
+        .school-banner { background-color: #a3e635; color: #000; font-size: 1.5rem; font-weight: bold; padding: 10px; text-align: center; border: 2px solid #000; margin-bottom: 20px; max-width: 500px; }
+        .stat-container { display: flex; flex-direction: column; gap: 10px; max-width: 350px; }
+        .stat-row { display: flex; align-items: center; gap: 15px; }
+        .stat-label { width: 120px; background-color: #f97316; color: #fff; font-weight: bold; padding: 6px; text-align: center; }
+        .stat-value { width: 80px; background-color: #ffedd5; color: #0ea5e9; font-weight: 900; font-size: 1.3rem; text-align: center; }
+        .access-panel { background-color: #cbd5e1; color: #000; border: 2px solid #000; padding: 20px; width: 100%; max-width: 700px; margin: 0 auto; }
+        .panel-header { background-color: #facc15; color: #000; font-size: 1.3rem; font-weight: bold; padding: 8px; text-align: center; margin-bottom: 15px; }
+        .panel-header-green { background-color: #84cc16; color: #fff; }
+        .panel-footer-actions { display: flex; gap: 8px; margin-top: 15px; }
+        .btn-action-flat { padding: 8px 16px; font-weight: bold; background-color: #e2e8f0; color: #000; cursor: pointer; border: 1px solid #000; }
+        .exam-timer-box { background-color: #facc15; color: #000; font-weight: 900; font-size: 1.5rem; padding: 6px 20px; border: 1px solid #000; text-align: center; margin-bottom: 15px; }
+        .quiz-content-area { background-color: #fff; padding: 15px; margin-top: 15px; border: 1px solid #000; color: #000; }
+        .opt-btn { width: 100%; text-align: left; padding: 10px; background-color: #f8fafc; border: 1px solid #cbd5e1; color: #000; margin-bottom: 6px; cursor: pointer; }
     </style>
 </head>
 <body>
 
-    <!-- LOGIN SCREEN -->
     <div id="loginPage">
         <div class="login-box">
-            <h1>WELCOM</h1>
-            <div class="form-group">
+            <div class="login-banner">WELCOM</div>
+            <div class="access-group">
                 <label>Username</label>
                 <input type="text" id="loginUser" value="admin">
             </div>
-            <div class="form-group">
+            <div class="access-group">
                 <label>Password</label>
                 <input type="password" id="loginPass" value="admin123">
             </div>
-            <button type="button" onclick="kallattiinSeensi()" class="btn-cyan">Login</button>
+            <button type="button" onclick="kallattiinSeensi()" class="btn-access-login">Login</button>
         </div>
     </div>
 
-    <!-- MAIN APP SCREEN -->
     <div id="appPage">
         <header>
             Mana Barnoota Sheek Bakrii Saphaloo Sad.2ffaa (Shek Bekri Sapalo Secondary School)
@@ -58,97 +63,64 @@
 
         <div class="app-container">
             <nav>
-                <button id="nav-dashboard" onclick="showSection('dashboardSection')" class="btn-nav active">Dashboard</button>
-                <button id="nav-student" onclick="showSection('studentRegSection')" class="btn-nav">Galmeessa Barataa</button>
-                <button id="nav-teacher" onclick="showSection('teacherExamSection')" class="btn-nav">Foormii Barsiisaa</button>
-                <button id="nav-exam" onclick="showSection('studentExamSection')" class="btn-nav">Qormaata Barataa</button>
-                <div onclick="logout()" class="btn-logout">Cufi (Logout)</div>
+                <button onclick="showSection('dashboardSection')" class="btn-nav-access">Dashboard</button>
+                <button onclick="showSection('studentRegSection')" class="btn-nav-access btn-nav-yellow">Galmeesi</button>
+                <button onclick="showSection('teacherExamSection')" class="btn-nav-access btn-nav-yellow">Gara_Unka_Barsiisaa</button>
+                <button onclick="showSection('studentExamSection')" class="btn-nav-access btn-nav-orange">Gara Qormaata Barataan</button>
+                <button onclick="showSection('createUserSection')" class="btn-nav-access btn-nav-orange">Frm_CreateUser</button>
+                <button onclick="logout()" class="btn-nav-access btn-nav-close">Cufi</button>
             </nav>
 
             <main>
-                <!-- DASHBOARD SECTION -->
                 <section id="dashboardSection">
-                    <h2 class="section-title">Dashboard Overview</h2>
-                    <div class="grid-3">
-                        <div class="card"><p>Waliigala Barattootaa</p><h3>124</h3></div>
-                        <div class="card"><p>Dhiira</p><h3>68</h3></div>
-                        <div class="card"><p>Dubara</p><h3>56</h3></div>
-                    </div>
-                </section>
-
-                <!-- STUDENT REGISTRATION -->
-                <section id="studentRegSection" class="hidden">
-                    <div style="max-width: 500px; margin: 0 auto; background: #1e293b; padding: 24px; border-radius: 8px;">
-                        <h2 class="section-title">Galmeessa Barataa Haaraa</h2>
-                        <div class="form-group"><label>ID Barataa</label><input type="text"></div>
-                        <div class="form-group"><label>Maqaa Barataa</label><input type="text"></div>
-                        <button onclick="alert('Barataan milkiidhaan galmeeffameera!')" class="btn-cyan" style="background:#eab308;">Save Barataa</button>
-                    </div>
-                </section>
-
-                <!-- TEACHER QUESTION INPUT -->
-                <section id="teacherExamSection" class="hidden">
-                    <div style="max-width: 600px; margin: 0 auto; background: #1e293b; padding: 24px; border-radius: 8px;">
-                        <h2 class="section-title">Foormii Barsiisaa (Gaaffii Lixi)</h2>
-                        <div class="form-group"><label>Gosa Barnootaa</label><input type="text"></div>
-                        <div class="form-group"><label>Gaaffii Barreessi</label><textarea style="height:80px;"></textarea></div>
-                        <div class="form-group"><label>Deebii Sirrii</label><input type="text" placeholder="A, B, C, ykn D"></div>
-                        <button onclick="alert('Gaaffiin kuusameera!')" class="btn-cyan" style="background:#10b981;">Save Gaaffii</button>
-                    </div>
-                </section>
-
-                <!-- STUDENT EXAM INTERFACE -->
-                <section id="studentExamSection" class="hidden">
-                    <div class="card" style="margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
-                        <button onclick="document.getElementById('quizBox').classList.remove('hidden');" class="btn-cyan" style="width:auto; padding: 10px 30px;">Qormaata Jalqabi</button>
-                        <div style="font-weight: bold; color: #facc15;">Yeroo: 20:00</div>
-                    </div>
-                    <div id="quizBox" class="card hidden">
-                        <div style="font-size: 1.2rem; font-weight: bold; margin-bottom: 16px;">Gaaffii 1: Garaagarummaa maaliiti?</div>
-                        <button onclick="alert('Ati A filatteetta.')" class="opt-btn">A. Filannoo Jalqabaa</button>
-                        <button onclick="alert('Ati B filatteetta.')" class="opt-btn">B. Filannoo Lammaffaa</button>
-                        <div class="quiz-footer">
-                            <button class="btn-action" style="background:#16a34a;">Darbe</button>
-                            <button class="btn-action" style="background:#ea580c;">Itti aanu</button>
-                            <button onclick="alert('Xumurameera!'); document.getElementById('quizBox').classList.add('hidden');" class="btn-action" style="background:#dc2626;">Xumuri</button>
+                    <div class="school-banner">Shek Bekri Sapalo secodeery School</div>
+                    <div style="display: flex; gap: 30px; flex-wrap: wrap;">
+                        <div class="stat-container">
+                            <div class="stat-row"><div class="stat-label">Waliig. 6</div><div class="stat-value">124</div></div>
+                            <div class="stat-row"><div class="stat-label">Dhiira 5</div><div class="stat-value">68</div></div>
+                            <div class="stat-row"><div class="stat-label">Dubar 1</div><div class="stat-value">56</div></div>
+                        </div>
+                        <div class="stat-container">
+                            <div class="stat-row"><div class="stat-label" style="background:#d97706;">Kutaa9 1</div><div class="stat-value">34</div></div>
+                            <div class="stat-row"><div class="stat-label" style="background:#d97706;">Kutaa10 2</div><div class="stat-value">40</div></div>
+                            <div class="stat-row"><div class="stat-label" style="background:#d97706;">Kutaa11 1</div><div class="stat-value">28</div></div>
+                            <div class="stat-row"><div class="stat-label" style="background:#d97706;">Kutaa12 2</div><div class="stat-value">22</div></div>
                         </div>
                     </div>
                 </section>
-            </main>
-        </div>
-    </div>
 
-    <!-- JAVASCRIPT LOGICS -->
-    <script>
-        function kallattiinSeensi() {
-            var u = document.getElementById('loginUser').value.trim();
-            var p = document.getElementById('loginPass').value.trim();
-            if(u === "admin" && p === "admin123") {
-                document.getElementById('loginPage').style.display = 'none';
-                document.getElementById('appPage').style.display = 'flex';
-                showSection('dashboardSection');
-            } else {
-                alert("Username ykn Password dogoggora!");
-            }
-        }
+                <section id="studentRegSection" class="hidden">
+                    <div class="access-panel" style="background-color: #fed7aa;">
+                        <div class="panel-header" style="background:none; color:#000; font-size:1.5rem;">Barattoota Kee Lakkfi Maqaa Barreessi</div>
+                        <div class="access-group"><label>ID_Barataa</label><input type="text" placeholder="(New)" readonly></div>
+                        <div class="access-group"><label>Maqaa_Barataa</label><input type="text"></div>
+                        <div class="access-group"><label>Kutaa</label><select><option>Kutaa 9</option><option>Kutaa 10</option><option>Kutaa 11</option><option>Kutaa 12</option></select></div>
+                        <div class="panel-footer-actions">
+                            <button onclick="alert('Haaraa!')" class="btn-action-flat" style="background:#eab308;">Haaraa galmeessi</button>
+                            <button onclick="alert('Kuusameera!')" class="btn-action-flat" style="background:#22c55e; color:#fff;">Save</button>
+                            <button onclick="showSection('dashboardSection')" class="btn-action-flat" style="background:#f97316; color:#fff;">Close</button>
+                        </div>
+                    </div>
+                </section>
 
-        function showSection(id) {
-            ['dashboardSection', 'studentRegSection', 'teacherExamSection', 'studentExamSection'].forEach(function(s) {
-                var el = document.getElementById(s); if(el) el.classList.add('hidden');
-            });
-            var active = document.getElementById(id); if(active) active.classList.remove('hidden');
-            
-            var btns = document.querySelectorAll('nav .btn-nav');
-            btns.forEach(function(b) { btn.classList.remove('active'); });
-            
-            var map = {'dashboardSection':'nav-dashboard','studentRegSection':'nav-student','teacherExamSection':'nav-teacher','studentExamSection':'nav-exam'};
-            var activeBtn = document.getElementById(map[id]); if(activeBtn) activeBtn.classList.add('active');
-        }
+                <section id="teacherExamSection" class="hidden">
+                    <div class="access-panel">
+                        <div class="panel-header">Foormii Barsiisaan Gaaffii Itti Barreessu</div>
+                        <div class="access-group"><label>ID_Qormaata</label><input type="text"></div>
+                        <div class="access-group"><label>Gosa_Barnootaa</label><input type="text"></div>
+                        <div class="access-group"><label>Gaaffii</label><textarea style="height:60px;"></textarea></div>
+                        <div class="access-group"><label>Filannoo_A</label><input type="text"></div>
+                        <div class="access-group"><label>Filannoo_B</label><input type="text"></div>
+                        <div class="access-group"><label>Deebii_Sirrii</label><input type="text" placeholder="A ykn B"></div>
+                        <div class="panel-footer-actions">
+                            <button onclick="alert('Kuusameera!')" class="btn-action-flat" style="background:#22c55e; color:#fff;">Save</button>
+                            <button onclick="showSection('dashboardSection')" class="btn-action-flat" style="background:#f97316; color:#fff;">Close Form</button>
+                        </div>
+                    </div>
+                </section>
 
-        function logout() {
-            document.getElementById('appPage').style.display = 'none';
-            document.getElementById('loginPage').style.display = 'flex';
-        }
-    </script>
-</body>
-</html>
+                <section id="studentExamSection" class="hidden">
+                    <div class="access-panel" style="background-color: #ebdcf7;">
+                        <div class="exam-timer-box">Yeroo Hafe: <span id="timer">20:00</span></div>
+                        <div class="access-group"><label>IDBarataa</label><input type="text" id="examStudId"></div>
+Use code with caution.Qormaata JalqabiGaaffii 1: Garaagarummaa maaliiti?A. Filannoo JalqabaaB. Filannoo LammaffaaXumurifunction kallattiinSeensi() {var u = document.getElementById('loginUser').value.trim();var p = document.getElementById('loginPass').value.trim();if (u === "admin" && p === "admin123") {document.getElementById('loginPage').style.display = 'none';document.getElementById('appPage').style.display = 'flex';showSection('dashboardSection');} else {alert("Username ykn Password dogoggora!");}}function showSection(id) {var ss = ['dashboardSection', 'studentRegSection', 'teacherExamSection', 'studentExamSection', 'createUserSection'];ss.forEach(function(s) { var el = document.getElementById(s); if(el) el.classList.add('hidden'); });var active = document.getElementById(id); if(active) active.classList.remove('hidden');}function logout() {document.getElementById('appPage').style.display = 'none';document.getElementById('loginPage').style.display = 'flex';}let timerInterval;function startExamControl() {var id = document.getElementById('examStudId').value.trim();if(!id) return alert('Maaloo dursitanii ID Barataa galchaa!');document.getElementById('liveQuizArea').classList.remove('hidden');let t = 1200;clearInterval(timerInterval);timerInterval = setInterval(() => {let m = parseInt(t / 60, 10); let s = parseInt(t % 60, 10);m = m < 10 ? "0" + m : m; s = s < 10 ? "0" + s : s;document.getElementById('timer').innerText = m + ":" + s;if (--t < 0) { clearInterval(timerInterval); endExamControl(); }}, 1000);}function endExamControl() {clearInterval(timerInterval); alert("Xumurameera!");document.getElementById('liveQuizArea').classList.add('hidden');showSection('dashboardSection');}
