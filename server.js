@@ -16,12 +16,13 @@ app.get('/qormaata', (req, res) => {
     res.sendFile(path.join(__dirname, 'qormaata.html'));
 });
 
-// Kuusaa deetaa MySQL XAMPP wajjin wal-qunnamsiisuu
+// --- SADDARKAA HAARAA: Kuusaa Deetaa MySQL Clever Cloud Online Wal-qunnamsiisuu ---
+// Ragaaleen kun dhibba dhibbatti teessoo haaraa Clever Cloud irraa argame kanaan to'atamanii jiru
 const db = mysql.createConnection({
-    host: 'localhost',       
-    user: 'root',            
-    password: '',    // XAMPP irratti password duwwaa dha
-    database: 'ShekBakriSMS'
+    host: '://clever-cloud.com',       
+    user: 'uoly3lagqinw20jv',            
+    password: 'byaolahodhgmbpyqhb5u',    
+    database: 'byaolahodhgmbpyqhb5u'
 });
 
 db.connect((err) => {
@@ -29,7 +30,7 @@ db.connect((err) => {
         console.error('Dogoggora MySQL wal-qunnamsiisuu: ' + err.stack);
         return;
     }
-    console.log('Kuusaan deetaa MySQL milkiin wal-qunnameera!');
+    console.log('Kuusaan deetaa MySQL Online milkiin wal-qunnameera!');
 });
 
 // 3. Ragaa Galmee Barataa Kuusuuf (Upload API - FaydaAliasNumber Hidha)
@@ -38,7 +39,6 @@ app.post('/galmeessi', (req, res) => {
     (Maqaa, Maqaa_Abbaa, Maqaa_Akaakayuu, Saala, Umrii, Kutaa, Aradaa, Ganda, Bilbila, FaydaAliasNumber) 
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
     
-    // Bakka req.body.FAN ture guutummaatti gara req.body.FaydaAliasNumber tti sirreeffameera
     const values = [
         req.body.Maqaa, 
         req.body.Maqaa_Abbaa, 
