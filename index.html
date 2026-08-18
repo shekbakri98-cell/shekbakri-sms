@@ -3,79 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sirna Bulchiinsa Mana Barnootaa</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Shek Bekri Sapalo Secondary School</title>
+    <script src="https://tailwindcss.com"></script>
 </head>
-<body class="bg-gray-50 font-sans pb-24">
-    <header class="bg-purple-800 text-white p-5 shadow-lg text-center text-2xl font-bold tracking-wide">
-        Unka Fudhadhu Qormaataa & Bulchiinsa Barataa
-    </header>
-    <div class="max-w-7xl mx-auto p-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div class="bg-white p-6 rounded-xl shadow-md border-t-4 border-purple-600 lg:col-span-1">
-            <h2 class="text-xl font-bold mb-4 text-purple-800 border-b pb-2">Galmeessa Barataa</h2>
-            <form id="studentForm" class="space-y-4">
+<body class="bg-indigo-950 font-sans text-gray-100">
+
+    <!-- LOGIN SCREEN -->
+    <div id="loginPage" class="flex items-center justify-center min-h-screen">
+        <div class="bg-slate-900 p-8 rounded-2xl shadow-2xl w-full max-w-md border border-slate-700">
+            <h1 class="text-3xl font-black text-center text-amber-400 tracking-wider mb-6">WELCOM</h1>
+            <form id="loginForm" class="space-y-4">
                 <div>
-                    <label class="block text-sm font-semibold text-gray-700">ID Barataa</label>
-                    <input type="text" id="studentId" required class="w-full p-2.5 border rounded-lg mt-1 focus:ring-2 focus:ring-purple-500 outline-none">
+                    <label class="block text-sm font-semibold text-gray-400">Username</label>
+                    <input type="text" id="loginUser" required class="w-full p-3 rounded bg-slate-800 border border-slate-600 focus:ring-2 focus:ring-amber-400 outline-none text-white mt-1">
                 </div>
                 <div>
-                    <label class="block text-sm font-semibold text-gray-700">Maqaa Barataa</label>
-                    <input type="text" id="name" required class="w-full p-2.5 border rounded-lg mt-1 focus:ring-2 focus:ring-purple-500 outline-none">
+                    <label class="block text-sm font-semibold text-gray-400">Password</label>
+                    <input type="password" id="loginPass" required class="w-full p-3 rounded bg-slate-800 border border-slate-600 focus:ring-2 focus:ring-amber-400 outline-none text-white mt-1">
                 </div>
-                <div>
-                    <label class="block text-sm font-semibold text-gray-700">Kutaa</label>
-                    <select id="grade" required class="w-full p-2.5 border rounded-lg mt-1 bg-white">
-                        <option value="">Filadhu...</option>
-                        <option value="9">Kutaa 9</option>
-                        <option value="10">Kutaa 10</option>
-                        <option value="11">Kutaa 11</option>
-                        <option value="12">Kutaa 12</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-sm font-semibold text-gray-700">Gosa Barnootaa</label>
-                    <select id="subject" required class="w-full p-2.5 border rounded-lg mt-1 bg-white">
-                        <option value="">Filadhu...</option>
-                        <option value="Afan Oromo">Afaan Oromoo</option>
-                        <option value="Mathematics">Herrega</option>
-                        <option value="Physics">Fiiziksii</option>
-                        <option value="Chemistry">Keemistrii</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-sm font-semibold text-gray-700">Gosa Qormaataa</label>
-                    <select id="examType" required class="w-full p-2.5 border rounded-lg mt-1 bg-white">
-                        <option value="">Filadhu...</option>
-                        <option value="Mid Exam">Qormaata Walakkaa (Mid)</option>
-                        <option value="Final Exam">Qormaata Xumuraa (Final)</option>
-                    </select>
-                </div>
-                <button type="submit" class="w-full bg-purple-600 text-white p-3 rounded-lg font-bold hover:bg-purple-700 transition duration-200">Barataa Galmeessi</button>
+                <button type="submit" class="w-full bg-cyan-500 hover:bg-cyan-600 text-slate-900 p-3 rounded-lg font-black text-lg transition shadow-lg mt-2">Login</button>
             </form>
         </div>
-        <div class="bg-white p-6 rounded-xl shadow-md border-t-4 border-blue-600 lg:col-span-2">
-            <h2 class="text-xl font-bold mb-4 text-blue-800 border-b pb-2">Barattoota Galmeeffaman</h2>
-            <div class="overflow-x-auto">
-                <table class="w-full text-left border-collapse">
-                    <thead>
-                        <tr class="bg-gray-100 text-gray-700 font-semibold">
-                            <th class="p-3 border">ID Barataa</th>
-                            <th class="p-3 border">Maqaa Barataa</th>
-                            <th class="p-3 border">Kutaa</th>
-                            <th class="p-3 border">Barnoota</th>
-                            <th class="p-3 border">Gosa Qormaataa</th>
-                        </tr>
-                    </thead>
-                    <tbody id="studentTableBody" class="text-gray-600"></tbody>
-                </table>
-            </div>
-        </div>
     </div>
-    <div class="fixed bottom-0 left-0 right-0 bg-cyan-500 p-4 flex justify-center space-x-6 shadow-inner z-50">
-        <button class="bg-green-500 text-white px-8 py-3 rounded-lg font-bold shadow hover:bg-green-600 transition">Gaaffii Darbe</button>
-        <button class="bg-orange-500 text-white px-8 py-3 rounded-lg font-bold shadow hover:bg-orange-600 transition">Gaaffii Itti aanu</button>
-        <button id="finishBtn" class="bg-red-600 text-white px-8 py-3 rounded-lg font-bold shadow hover:bg-red-700 transition">Xumuri</button>
-    </div>
-    <script src="app.js"></script>
-</body>
-</html>
+
+    <!-- MAIN APP SCREEN -->
+    <div id="appPage" class="hidden min-h-screen flex flex-col">
+        <header class="bg-cyan-600 p-4 text-slate-900 text-center font-black text-xl shadow-md">
+            Mana Barnoota Sheek Bakrii Saphaloo Sad.2ffaa (Shek Bekri Sapalo Secondary School)
+        </header>
+
+        <div class="flex flex-1">
+            <!-- Sidebar Navigation -->
+            <nav class="w-64 bg-slate-900 p-4 space-y-2 border-r border-slate-800">
+                <button onclick="showSection('dashboardSection')" class="w-full text-left p-3 rounded hover:bg-slate-800 font-bold text-amber-400">Dashboard</button>
+                <button onclick="showSection('studentRegSection')" class="w-full text-left p-3 rounded hover:bg-slate-800 font-bold">Galmeessa Barataa</button>
+                <button onclick="showSection('teacherExamSection')" class="w-full text-left p-3 rounded hover:bg-slate-800 font-bold">Foormii Barsiisaa (Gaaffii)</button>
+                <button onclick="showSection('studentExamSection')" class="w-full text-left p-3 rounded hover:bg-slate-800 font-bold">Gara Qormaata Barataa</button>
+                <button onclick="showSection('createUserSection')" class="w-full text-left p-3 rounded hover:bg-slate-800 font-bold text-emerald-400">Frm_CreateUser</button>
+                <button onclick="logout()" class="w-full text-left p-3 rounded bg-red-900/50 text-red-400 hover:bg-red-900 font-bold mt-10">Cufi (Logout)</button>
+            </nav>
+
+            <!-- Content Area -->
+            <main class="flex-1 p-6 bg-slate-800 overflow-y-auto">
+                
+                <!-- DASHBOARD SECTION -->
+                <section id="dashboardSection" class="space-y-6">
+                    <h2 class="text-2xl font-bold border-b border-slate-700 pb-2 text-amber-400">Dashboard Overview</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="bg-slate-900 p-4 rounded-xl border border-slate-700"><p class="text-sm text-gray-400">Waliigala Barattootaa</p><p id="statTotal" class="text-4xl font-black mt-2 text-cyan-400">0</p></div>
+                        <div class="bg-slate-900 p-4 rounded-xl border border-slate-700"><p class="text-sm text-gray-400">Dhiira</p><p id="statDhiira" class="text-4xl font-black mt-2 text-blue-400">0</p></div>
+                        <div class="bg-slate-900 p-4 rounded-xl border border-slate-700"><p class="text-sm text-gray-400">Dubara</p><p id="statDubar" class="text-4xl font-black mt-2 text-pink-400">0</p></div>
+                    </div>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
+                        <div class="bg-amber-500/10 p-4 rounded-lg border border-amber-500/30 text-center"><p class="text-sm">Kutaa 9</p><p id="statG9" class="text-2xl font-bold mt-1 text-amber-400">0</p></div>
+                        <div class="bg-amber-500/10 p-4 rounded-lg border border-amber-500/30 text-center"><p class="text-sm">Kutaa 10</p><p id="statG10" class="text-2xl font-bold mt-1 text-amber-400">0</p></div>
+                        <div class="bg-amber-500/10 p-4 rounded-lg border border-amber-500/30 text-center"><p class="text-sm">Kutaa 11</p><p id="statG11" class="text-2xl font-bold mt-1 text-amber-400">0</p></div>
+                        <div class="bg-amber-500/10 p-4 rounded-lg border border-amber-500/30 text-center"><p class="text-sm">Kutaa 12</p><p id="statG12" class="text-2xl font-bold mt-1 text-amber-400">0</p></div>
+                    </div>
+                </section>
+
+                <!-- STUDENT REGISTRATION -->
+                <section id="studentRegSection" class="hidden max-w-xl mx-auto bg-slate-900 p-6 rounded-xl border border-slate-700">
+                    <h2 class="text-xl font-bold mb-4 text-center text-amber-400">Barattoota Kee Lakkfi Maqaa Barreessi</h2>
+                    <form id="studentForm" class="space-y-4">
+                        <div><label class="text-sm">ID_Barataa</label><input type="text" id="regId" required class="w-full p-2.5 rounded bg-slate-800 border mt-1 text-white"></div>
+                        <div><label class="text-sm">Maqaa_Barataa</label><input type="text" id="regName" required class="w-full p-2.5 rounded bg-slate-800 border mt-1 text-white"></div>
+                        <div>
+                            <label class="text-sm">Kutaa</label>
+                            <select id="regGrade" required class="w-full p-2.5 rounded bg-slate-800 border mt-1 text-white"><option value="9">Kutaa 9</option><option value="10">Kutaa 10</option><option value="11">Kutaa 11</option><option value="12">Kutaa 12</option></select>
+                        </div>
+                        <div>
+                            <label class="text-sm">Saala (Gender)</label>
+                            <select id="regGender" required class="w-full p-2.5 rounded bg-slate-800 border mt-1 text-white"><option value="Dhiira">Dhiira</option><option value="Dubara">Dubara</option></select>
+                        </div>
+                        <div class="flex space-x-2 pt-2">
+                            <button type="submit" class="flex-1 bg-amber-500 text-slate-900 font-bold p-2.5 rounded">Save</button>
+                            <button type="reset" class="bg-slate-700 p-2.5 rounded">Haaraa</button>
+                        </div>
+                    </form>
+                </section>
+
+                <!-- TEACHER QUESTION INPUT -->
+                <section id="teacherExamSection" class="hidden bg-slate-900 p-6 rounded-xl border border-slate-700">
+                    <h2 class="text-xl font-bold mb-4 text-amber-400 border-b pb-2">Foormii Barsiisaan Gaaffii Itti Barreessu</h2>
+                    <form id="questionForm" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="space-y-3">
+                            <div><label class="text-sm">ID_Qormaata</label><input type="text" id="qExamId" required class="w-full p-2 rounded bg-slate-800 border mt-1 text-white"></div>
+                            <div><label class="text-sm">ID_Gaaffii</label><input type="text" id="qId" required class="w-full p-2 rounded bg-slate-800 border mt-1 text-white"></div>
+                            <div><label class="text-sm">Kutaa</label><select id="qGrade" class="w-full p-2 rounded bg-slate-800 border mt-1 text-white"><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option></select></div>
+                            <div><label class="text-sm">Gosa_Barnootaa</label><input type="text" id="qSubject" required class="w-full p-2 rounded bg-slate-800 border mt-1 text-white"></div>
+                            <div><label class="text-sm">Gosa_Qormaataa</label><select id="qType" class="w-full p-2 rounded bg-slate-800 border mt-1 text-white"><option value="Mid">Mid Exam</option><option value="Final">Final Exam</option></select></div>
+                        </div>
+                        <div class="space-y-3">
+                            <div><label class="text-sm">Fakkii_Gaaffii (Image URL)</label><input type="text" id="qImg" class="w-full p-2 rounded bg-slate-800 border mt-1 text-white" placeholder="Optional URL"></div>
+                            <div><label class="text-sm">Gaaffii</label><textarea id="qText" required class="w-full p-2 h-24 rounded bg-slate-800 border mt-1 text-white"></textarea></div>
+                            <div class="grid grid-cols-2 gap-2">
+                                <div><label class="text-sm">Filannoo_A</label><input type="text" id="optA" required class="w-full p-1.5 rounded bg-slate-800 border mt-1 text-white"></div>
+                                <div><label class="text-sm">Filannoo_B</label><input type="text" id="optB" required class="w-full p-1.5 rounded bg-slate-800 border mt-1 text-white"></div>
+                                <div><label class="text-sm">Filannoo_C</label><input type="text" id="optC" required class="w-full p-1.5 rounded bg-slate-800 border mt-1 text-white"></div>
+                                <div><label class="text-sm">Filannoo_D</label><input type="text" id="optD" required class="w-full p-1.5 rounded bg-slate-800 border mt-1 text-white"></div>
+                            </div>
