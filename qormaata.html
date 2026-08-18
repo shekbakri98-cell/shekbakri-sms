@@ -8,7 +8,7 @@
         body {
             margin: 0;
             padding: 0;
-            background-color: #ffebd2; /* Halluu unka keetii jalaa (Light Cream/Peach) */
+            background-color: #ffebd2; /* Halluu unka keetii jalaa (Light Cream) */
             font-family: Arial, sans-serif;
         }
 
@@ -104,7 +104,7 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background-color: #00bfff; /* Halluu bar jalaa cuquliisa */
+            background-color: #00bfff; 
             padding: 12px;
             display: flex;
             justify-content: center;
@@ -131,7 +131,6 @@
 
     <!-- Kutaa Gubbaa (Header) -->
     <div class="top-header">
-        <!-- Kolonii 1ffaa -->
         <div>
             <div class="input-group" style="margin-bottom: 8px;">
                 <span class="label-text">IDBarataa</span>
@@ -207,14 +206,28 @@
     </div>
 
     <script>
+        // --- SADDARKAA EEGINSA USER ROLE ---
+        const userRole = localStorage.getItem('userRole');
+        const loggedInUser = localStorage.getItem('username');
+
+        // Yoo login osoo hin godhin ta'e gara loginitti deversaa
+        if (!userRole) {
+            window.location.href = '/login';
+        }
+
         let gaaffileeWaliigala = [];
         let gaaffiiAmmaaIdx = 0;
         let deebiiBarataa = {}; 
-        let totalSeconds = 1200; // Daqiiqaa 20 (20 * 60)
+        let totalSeconds = 1200; 
         let timerInterval = null;
         let filannooQubee = null;
 
-        // 1. Gaaffii Filter Godhi (VBA: GaaffiiFilterGodhi)
+        // Ofumaan maqaa barataa login godhe uunka irratti guuta
+        if (userRole === 'Barataa' && loggedInUser) {
+            document.getElementById('txtMaqaaBarataa').value = loggedInUser;
+            document.getElementById('txtMaqaaBarataa').readOnly = true;
+        }
+
         async function gaaffiiFilterGodhi() {
             const kutaa = document.getElementById('CboKutaa').value;
             const gosa = document.getElementById('cboGosaBarnootaa').value;
@@ -223,11 +236,9 @@
             if (!kutaa || !gosa || !qormaata) return;
 
             try {
-                // MySQL Online irraa gaaffilee fida
                 const response = await fetch('/api/qormaata');
                 const hunduu = await response.json();
 
-                // Akka koodii VBA keessaniitti filter godha
                 gaaffileeWaliigala = hunduu.filter(q => 
                     q.Kutaa == kutaa && 
                     q.Gosa_Barnootaa == gosa && 
@@ -240,7 +251,6 @@
                     document.getElementById('harkaDuwwaa').style.display = 'none';
                     gaaffiiArgisiisi();
                     
-                    // Sa'aatii Jalqabsiisi
                     clearInterval(timerInterval);
                     totalSeconds = 1200;
                     timerInterval = setInterval(updateTimer, 1000);
@@ -263,9 +273,3 @@
             document.getElementById('optB').innerText = q.Filannoo_B;
             document.getElementById('optC').innerText = q.Filannoo_C;
             document.getElementById('optD').innerText = q.Filannoo_D;
-
-            // Qulqulleessi filannoo
-            const boxes = document.querySelectorAll('.option-box');
-            boxes.forEach(b => b.classList.remove('selected'));
-            filannooQubee = null;
-        }
