@@ -7,17 +7,17 @@
     <style>
         /* GLOBAL DESIGN */
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background-color: #0f172a; color: #f8fafc; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; min-h-screen: 100vh; display: flex; flex-direction: column; }
+        body { background-color: #0f172a; color: #f8fafc; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; min-height: 100vh; display: flex; flex-direction: column; }
         
         /* LOGIN PAGE */
         #loginPage { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
-        .login-box { background-color: #1e293b; padding: 40px; rounded-radius: 12px; border: 1px solid #334155; width: 100%; max-width: 400px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
+        .login-box { background-color: #1e293b; padding: 40px; border: 1px solid #334155; width: 100%; max-width: 400px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
         .login-box h1 { text-align: center; color: #facc15; font-size: 2rem; margin-bottom: 24px; font-weight: 800; letter-spacing: 1px; }
         
         /* INPUTS & LABELS */
         .form-group { margin-bottom: 16px; }
         .form-group label { display: block; font-size: 0.875rem; font-weight: 600; color: #94a3b8; margin-bottom: 6px; }
-        .form-group input, .form-group select, .form-group textarea { w-full; width: 100%; padding: 12px; border-radius: 6px; background-color: #0f172a; border: 1px solid #475569; color: #fff; font-size: 1rem; outline: none; transition: 0.2s; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 12px; border-radius: 6px; background-color: #0f172a; border: 1px solid #475569; color: #fff; font-size: 1rem; outline: none; transition: 0.2s; }
         .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: #22d3ee; box-shadow: 0 0 0 2px rgba(34, 211, 238, 0.2); }
         
         /* BUTTONS */
@@ -25,7 +25,7 @@
         .btn-cyan:hover { background-color: #0891b2; }
         .btn-nav { width: 100%; text-align: left; padding: 12px; border: none; background: none; color: #f8fafc; font-size: 1rem; font-weight: 600; cursor: pointer; border-radius: 6px; transition: 0.2s; }
         .btn-nav:hover { background-color: #1e293b; }
-        .btn-nav.active { color: #facc15; }
+        .btn-nav.active { color: #facc15; background-color: #1e293b; }
         .btn-logout { background-color: rgba(127, 29, 29, 0.4); color: #f87171; border: 1px solid #7f1d1d; margin-top: 40px; }
         .btn-logout:hover { background-color: #7f1d1d; }
 
@@ -73,21 +73,20 @@
 </head>
 <body>
 
-    <!-- LOGIN SCREEN -->
+    <!-- LOGIN SCREEN (FIXED: FORM HAGAMEERA REFRESH ITTISUUF) -->
     <div id="loginPage">
         <div class="login-box">
             <h1>WELCOM</h1>
-            <form id="loginForm">
-                <div class="form-group">
-                    <label>Username</label>
-                    <input type="text" id="loginUser" required>
-                </div>
-                <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" id="loginPass" required>
-                </div>
-                <button type="submit" class="btn-cyan">Login</button>
-            </form>
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text" id="loginUser">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="loginPass">
+            </div>
+            <!-- onclick kallattiin hojjeta amma -->
+            <button onclick="kallattiinSeensi()" class="btn-cyan">Login</button>
         </div>
     </div>
 
@@ -112,7 +111,7 @@
             <main>
                 
                 <!-- DASHBOARD SECTION -->
-                <section id="dashboardSection" class="space-y-6">
+                <section id="dashboardSection">
                     <h2 class="section-title">Dashboard Overview</h2>
                     <div class="grid-3">
                         <div class="card"><p>Waliigala Barattootaa</p><h3 id="statTotal">0</h3></div>
@@ -151,3 +150,4 @@
                 </section>
 
                 <!-- TEACHER QUESTION INPUT -->
+                <section id="teacherExamSection" class="hidden">Foormii Barsiisaan Gaaffii Itti BarreessuID_QormaataID_GaaffiiKutaa9101112Gosa_BarnootaaGosa_QormaataaMid ExamFinal ExamFakkii_Gaaffii (Image URL)GaaffiiFilannoo_AFilannoo_BFilannoo_CFilannoo_DDeebii_SirriiSave Gaaffii// Koodii bypass kana as jalatti dabalteerra akka inni unka unkaa irraa dhowwamuuffunction kallattiinSeensi() {const user = document.getElementById('loginUser').value.trim();const pass = document.getElementById('loginPass').value.trim();if(user === "admin" && pass === "admin123") {document.getElementById('loginPage').style.display = 'none';document.getElementById('appPage').classList.remove('hidden');showSection('dashboardSection');} else {alert("Username ykn Password dogoggora! Maaloo 'admin' fi 'admin123' fayyadami.");}}
