@@ -2,72 +2,270 @@
 <html lang="om">
 <head>
     <meta charset="UTF-8">
-    <title>Kutaa Qormaata Online - MBS Sheek Bakrii</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unka Fudhadhu Qormaataa</title>
     <style>
-        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f1f5f9; padding: 30px; }
-        .exam-container { max-width: 700px; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin: auto; }
-        h2 { color: #1e3a8a; text-align: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 15px; }
-        .question-block { margin-bottom: 25px; padding: 15px; border-bottom: 1px solid #f1f5f9; }
-        .question-text { font-size: 16px; font-weight: bold; margin-bottom: 10px; color: #1e293b; }
-        .option { display: block; margin: 8px 0; font-size: 15px; cursor: pointer; }
-        .btn-submit { display: block; width: 100%; padding: 12px; background-color: #16a34a; color: white; border: none; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 20px; }
-        .btn-submit:hover { background-color: #15803d; }
-        #result-box { display: none; margin-top: 20px; padding: 20px; background-color: #dcfce7; border-left: 5px solid #16a34a; border-radius: 6px; text-align: center; font-size: 18px; font-weight: bold; color: #14532d; }
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #ffebd2; /* Halluu unka keetii jalaa (Light Cream/Peach) */
+            font-family: Arial, sans-serif;
+        }
+
+        /* Header Gubbaa Diilaallaa */
+        .top-header {
+            background-color: #7b5294; /* Halluu diilaallaa (Purple) */
+            padding: 15px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+            border-bottom: 2px solid #555;
+        }
+
+        .input-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .label-text {
+            background-color: #fff;
+            padding: 4px 8px;
+            font-weight: bold;
+            border: 1px solid #777;
+            min-width: 120px;
+            font-size: 14px;
+        }
+
+        input[type="text"], select {
+            padding: 4px;
+            border: 1px solid #777;
+            font-size: 14px;
+            width: 180px;
+        }
+
+        /* Sa'aatii (Timer Banner Yellow) */
+        .timer-banner {
+            background-color: #ffff00;
+            color: #000;
+            font-size: 26px;
+            font-weight: bold;
+            padding: 5px 15px;
+            text-align: center;
+            border: 1px solid #000;
+            align-self: center;
+            justify-self: center;
+        }
+
+        /* Kutaa Gaaffii Multichoice */
+        .main-content {
+            padding: 40px;
+            max-width: 800px;
+            margin: 0 auto;
+            min-height: 300px;
+        }
+
+        .gaaffii-text {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .option-box {
+            background-color: #ffffff;
+            padding: 12px 20px;
+            border: 1px solid #aaa;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .option-box:hover {
+            background-color: #f0f0f0;
+        }
+
+        .option-box.selected {
+            background-color: #d2e9ff;
+            border-color: #0080ff;
+        }
+
+        /* Bottonoota Jalaa */
+        .bottom-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: #00bfff; /* Halluu bar jalaa cuquliisa */
+            padding: 12px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            border-top: 2px solid #555;
+        }
+
+        .btn {
+            padding: 8px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            border: 1px solid #000;
+            color: black;
+            border-radius: 4px;
+        }
+
+        .btn-green { background-color: #32cd32; }
+        .btn-orange { background-color: #ffa500; }
+        .btn-red { background-color: #ff4500; color: white; }
     </style>
 </head>
 <body>
 
-<div class="exam-container">
-    <h2>MBS Sheek Bakrii - Qormaata Online</h2>
-    <div id="exam-form"></div>
-    <button class="btn-submit" onclick="submitExam()">Qormaata Xumuri</button>
-    <div id="result-box"></div>
-</div>
+    <!-- Kutaa Gubbaa (Header) -->
+    <div class="top-header">
+        <!-- Kolonii 1ffaa -->
+        <div>
+            <div class="input-group" style="margin-bottom: 8px;">
+                <span class="label-text">IDBarataa</span>
+                <input type="text" id="IDBarataa">
+            </div>
+            <div class="input-group" style="margin-bottom: 8px;">
+                <span class="label-text">IDQormaataa</span>
+                <input type="text" id="IDQormaataa">
+            </div>
+            <div class="input-group">
+                <span class="label-text">Maqaa Barataa</span>
+                <input type="text" id="txtMaqaaBarataa" style="width: 250px;">
+            </div>
+        </div>
 
-<script>
-    let gaaffileeGlobal = [];
+        <!-- Kolonii Sa'aatii -->
+        <div class="timer-banner" id="timerBox">Yeroo Hafe: 20:00</div>
 
-    // 1. Gaaffilee server irraa fiduu
-    async function loadQuestions() {
-        const response = await fetch('/api/qormaata');
-        gaaffileeGlobal = await response.json();
-        const container = document.getElementById('exam-form');
-        
-        gaaffileeGlobal.forEach((q, index) => {
-            container.innerHTML += `
-                <div class="question-block">
-                    <div class="question-text">${index + 1}. ${q.Gaaffii}</div>
-                    <label class="option"><input type="radio" name="q_${q.ID_Gaaffii}" value="A"> A. ${q.Filannoo_A}</label>
-                    <label class="option"><input type="radio" name="q_${q.ID_Gaaffii}" value="B"> B. ${q.Filannoo_B}</label>
-                    <label class="option"><input type="radio" name="q_${q.ID_Gaaffii}" value="C"> C. ${q.Filannoo_C}</label>
-                    <label class="option"><input type="radio" name="q_${q.ID_Gaaffii}" value="D"> D. ${q.Filannoo_D}</label>
-                </div>
-            `;
-        });
-    }
+        <!-- Kolonii Filter (Mirga) -->
+        <div>
+            <div class="input-group" style="margin-bottom: 8px;">
+                <span class="label-text">Kutaa</span>
+                <select id="CboKutaa" onchange="gaaffiiFilterGodhi()">
+                    <option value="">Filadhu...</option>
+                    <option value="9">Kutaa 9</option>
+                    <option value="10">Kutaa 10</option>
+                    <option value="11">Kutaa 11</option>
+                    <option value="12">Kutaa 12</option>
+                </select>
+            </div>
+            <div class="input-group" style="margin-bottom: 8px;">
+                <span class="label-text">Gosa Barnootaa</span>
+                <select id="cboGosaBarnootaa" onchange="gaaffiiFilterGodhi()">
+                    <option value="">Filadhu...</option>
+                    <option value="Biology">Biology</option>
+                    <option value="Chemistry">Chemistry</option>
+                    <option value="Physics">Physics</option>
+                    <option value="Maths">Mathematics</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <span class="label-text">Gosa Qormaata</span>
+                <select id="cboGosaQormaataa" onchange="gaaffiiFilterGodhi()">
+                    <option value="">Filadhu...</option>
+                    <option value="Mid">Mid Exam</option>
+                    <option value="Final">Final Exam</option>
+                </select>
+            </div>
+        </div>
+    </div>
 
-    // 2. Qormaata xumuruu fi deebii madaaluu
-    async function submitExam() {
-        let deebiiBarataa = {};
-        gaaffileeGlobal.forEach(q => {
-            const selected = document.querySelector(`input[name="q_${q.ID_Gaaffii}"]:checked`);
-            deebiiBarataa[q.ID_Gaaffii] = selected ? selected.value : null;
-        });
+    <!-- Kutaa Gidduu (Bakka Gaaffiin Itti Bahu) -->
+    <div class="main-content">
+        <div id="qormaataKutaa" style="display: none;">
+            <div class="gaaffii-text" id="gaaffiiBox">Gaaffiin asirratti baha...</div>
+            <div class="options-container">
+                <div class="option-box" onclick="selectOption('A')"><b>A.</b> <span id="optA"></span></div>
+                <div class="option-box" onclick="selectOption('B')"><b>B.</b> <span id="optB"></span></div>
+                <div class="option-box" onclick="selectOption('C')"><b>C.</b> <span id="optC"></span></div>
+                <div class="option-box" onclick="selectOption('D')"><b>D.</b> <span id="optD"></span></div>
+            </div>
+        </div>
+        <div id="harkaDuwwaa" style="font-size: 20px; font-weight: bold; text-align: center; margin-top: 5px; color: #555;">
+            Maaloo qormaata fudhachuuf gubbaatti Kutaa fi Gosa Barnootaa filadhaa.
+        </div>
+    </div>
 
-        const response = await fetch('/api/madaali', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ deebii: deebiiBarataa })
-        });
+    <!-- Bottonoota Jalaa (Navigation) -->
+    <div class="bottom-bar">
+        <button class="btn btn-green" onclick="gaaffiiDarbe()">Gaaffii Darbe</button>
+        <button class="btn btn-orange" onclick="btnIttiAanu_Click()">Gaaffii Itti aanu</button>
+        <button class="btn btn-red" onclick="btnXumuri_Click()">Xumuri</button>
+    </div>
 
-        const result = await response.json();
-        const resultBox = document.getElementById('result-box');
-        resultBox.style.display = 'block';
-        resultBox.innerHTML = `Qormaataa Xumurtaniittu!<br>Qabxii: ${result.qabxii}/${result.waliigala} (${result.dhibbantaa})`;
-        window.scrollTo(0, document.body.scrollHeight);
-    }
+    <script>
+        let gaaffileeWaliigala = [];
+        let gaaffiiAmmaaIdx = 0;
+        let deebiiBarataa = {}; 
+        let totalSeconds = 1200; // Daqiiqaa 20 (20 * 60)
+        let timerInterval = null;
+        let filannooQubee = null;
 
-    loadQuestions();
-</script>
-</body>
-</html>
+        // 1. Gaaffii Filter Godhi (VBA: GaaffiiFilterGodhi)
+        async function gaaffiiFilterGodhi() {
+            const kutaa = document.getElementById('CboKutaa').value;
+            const gosa = document.getElementById('cboGosaBarnootaa').value;
+            const qormaata = document.getElementById('cboGosaQormaataa').value;
+
+            if (!kutaa || !gosa || !qormaata) return;
+
+            try {
+                // MySQL Online irraa gaaffilee fida
+                const response = await fetch('/api/qormaata');
+                const hunduu = await response.json();
+
+                // Akka koodii VBA keessaniitti filter godha
+                gaaffileeWaliigala = hunduu.filter(q => 
+                    q.Kutaa == kutaa && 
+                    q.Gosa_Barnootaa == gosa && 
+                    q.Gosa_Qormaataa == qormaata
+                );
+
+                if (gaaffileeWaliigala.length > 0) {
+                    gaaffiiAmmaaIdx = 0;
+                    document.getElementById('qormaataKutaa').style.display = 'block';
+                    document.getElementById('harkaDuwwaa').style.display = 'none';
+                    gaaffiiArgisiisi();
+                    
+                    // Sa'aatii Jalqabsiisi
+                    clearInterval(timerInterval);
+                    totalSeconds = 1200;
+                    timerInterval = setInterval(updateTimer, 1000);
+                } else {
+                    alert("Ulaagaa kanaan gaaffiin qophaa'e hin jiru!");
+                    document.getElementById('qormaataKutaa').style.display = 'none';
+                    document.getElementById('harkaDuwwaa').style.display = 'block';
+                    clearInterval(timerInterval);
+                    document.getElementById('timerBox').innerText = "Yeroo Hafe: 00:00";
+                }
+            } catch (err) {
+                console.error("Error filter gaaffii:", err);
+            }
+        }
+
+        function gaaffiiArgisiisi() {
+            const q = gaaffileeWaliigala[gaaffiiAmmaaIdx];
+            document.getElementById('gaaffiiBox').innerText = `${gaaffiiAmmaaIdx + 1}. ${q.Gaaffii}`;
+            document.getElementById('optA').innerText = q.Filannoo_A;
+            document.getElementById('optB').innerText = q.Filannoo_B;
+            document.getElementById('optC').innerText = q.Filannoo_C;
+            document.getElementById('optD').innerText = q.Filannoo_D;
+
+            // Qulqulleessi filannoo
+            const boxes = document.querySelectorAll('.option-box');
+            boxes.forEach(b => b.classList.remove('selected'));
+            filannooQubee = null;
+        }
