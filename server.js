@@ -8,11 +8,10 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-// Node.js akka folder 'public' ykn faayiloota ala jiran hunda dubbisu gochuuf
-app.use(express.static(path.join(__dirname, 'public')));
+// --- CRITICAL FIX: JILDII PUBLIC MALEE KALLATTIIN AKKA DUBBISU TAASIFAMEERA ---
 app.use(express.static(__dirname));
 
-// MongoDB walqabsiisuu (FIXED: Yoo database dhabame sarvariin akka hin crash taane godhameera)
+// MongoDB walqabsiisuu (Yoo database dhabame sarvariin itti fufa)
 const MONGO_URI = process.env.MONGO_URI || "mongodb://localhost:27017/school_db";
 mongoose.connect(MONGO_URI)
   .then(() => console.log('Kuusaa Dataa (MongoDB) milkiidhaan walqabateera...'))
@@ -76,13 +75,9 @@ app.post('/api/answers/save', (req, res) => { res.json({ success: true }); });
 app.post('/api/students', (req, res) => { res.json({ success: true }); });
 app.post('/api/questions', (req, res) => { res.json({ success: true }); });
 
-// Weebsaayitiin yeroo banamu dirqamaan index.html akka banu gochuuf
+// Weebsaayitiin yeroo banamu dirqamaan index.html ala jiru akka banu gochuuf
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'), (err) => {
-    if (err) {
-      res.sendFile(path.join(__dirname, 'index.html'));
-    }
-  });
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 const PORT = process.env.PORT || 5000;
