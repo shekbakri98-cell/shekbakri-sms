@@ -2,7 +2,9 @@ const express = require('express');
 const mysql = require('mysql2');
 const path = require('path');
 const app = express();
-
+app.get('/uunkaalee', (req, res) => {
+    res.sendFile(path.join(__dirname, 'uunkaalee.html'));
+});
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
