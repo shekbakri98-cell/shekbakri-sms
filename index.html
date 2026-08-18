@@ -19,9 +19,10 @@
         .app-container { display: flex; flex: 1; }
         nav { width: 240px; background-color: #4a2e6d; padding: 15px; display: flex; flex-direction: column; gap: 10px; }
         .btn-nav-access { width: 100%; background-color: #84cc16; color: #000; font-weight: bold; padding: 10px; border: 2px solid #000; cursor: pointer; }
+        .btn-nav-access.active { color: #facc15; background-color: #1e293b; }
         .btn-nav-orange { background-color: #f97316; }
         .btn-nav-yellow { background-color: #eab308; }
-        .btn-nav-close { background-color: #b91c1c; color: #fff; margin-top: 20px; }
+        .btn-nav-close { background-color: #b91c1c; color: #fff; margin-top: 20px; padding: 10px; text-align: center; cursor: pointer; border: 2px solid #000; font-weight: bold; }
         main { flex: 1; padding: 25px; background-color: #7c5295; overflow-y: auto; }
         .hidden { display: none !important; }
         .school-banner { background-color: #a3e635; color: #000; font-size: 1.5rem; font-weight: bold; padding: 10px; text-align: center; border: 2px solid #000; margin-bottom: 20px; max-width: 500px; }
@@ -31,7 +32,6 @@
         .stat-value { width: 80px; background-color: #ffedd5; color: #0ea5e9; font-weight: 900; font-size: 1.3rem; text-align: center; }
         .access-panel { background-color: #cbd5e1; color: #000; border: 2px solid #000; padding: 20px; width: 100%; max-width: 700px; margin: 0 auto; }
         .panel-header { background-color: #facc15; color: #000; font-size: 1.3rem; font-weight: bold; padding: 8px; text-align: center; margin-bottom: 15px; }
-        .panel-header-green { background-color: #84cc16; color: #fff; }
         .panel-footer-actions { display: flex; gap: 8px; margin-top: 15px; }
         .btn-action-flat { padding: 8px 16px; font-weight: bold; background-color: #e2e8f0; color: #000; cursor: pointer; border: 1px solid #000; }
         .exam-timer-box { background-color: #facc15; color: #000; font-weight: 900; font-size: 1.5rem; padding: 6px 20px; border: 1px solid #000; text-align: center; margin-bottom: 15px; }
@@ -63,12 +63,12 @@
 
         <div class="app-container">
             <nav>
-                <button onclick="showSection('dashboardSection')" class="btn-nav-access">Dashboard</button>
-                <button onclick="showSection('studentRegSection')" class="btn-nav-access btn-nav-yellow">Galmeesi</button>
-                <button onclick="showSection('teacherExamSection')" class="btn-nav-access btn-nav-yellow">Gara_Unka_Barsiisaa</button>
-                <button onclick="showSection('studentExamSection')" class="btn-nav-access btn-nav-orange">Gara Qormaata Barataan</button>
-                <button onclick="showSection('createUserSection')" class="btn-nav-access btn-nav-orange">Frm_CreateUser</button>
-                <button onclick="logout()" class="btn-nav-access btn-nav-close">Cufi</button>
+                <button id="nav-dashboard" onclick="showSection('dashboardSection')" class="btn-nav-access active">Dashboard</button>
+                <button id="nav-student" onclick="showSection('studentRegSection')" class="btn-nav-access btn-nav-yellow">Galmeesi</button>
+                <button id="nav-teacher" onclick="showSection('teacherExamSection')" class="btn-nav-access btn-nav-yellow">Gara_Unka_Barsiisaa</button>
+                <button id="nav-exam" onclick="showSection('studentExamSection')" class="btn-nav-access btn-nav-orange">Gara Qormaata Barataan</button>
+                <button id="nav-user" onclick="showSection('createUserSection')" class="btn-nav-access btn-nav-orange">Frm_CreateUser</button>
+                <div onclick="logout()" class="btn-nav-close">Cufi</div>
             </nav>
 
             <main>
@@ -121,6 +121,3 @@
 
                 <section id="studentExamSection" class="hidden">
                     <div class="access-panel" style="background-color: #ebdcf7;">
-                        <div class="exam-timer-box">Yeroo Hafe: <span id="timer">20:00</span></div>
-                        <div class="access-group"><label>IDBarataa</label><input type="text" id="examStudId"></div>
-Use code with caution.Qormaata JalqabiGaaffii 1: Garaagarummaa maaliiti?A. Filannoo JalqabaaB. Filannoo LammaffaaXumurifunction kallattiinSeensi() {var u = document.getElementById('loginUser').value.trim();var p = document.getElementById('loginPass').value.trim();if (u === "admin" && p === "admin123") {document.getElementById('loginPage').style.display = 'none';document.getElementById('appPage').style.display = 'flex';showSection('dashboardSection');} else {alert("Username ykn Password dogoggora!");}}function showSection(id) {var ss = ['dashboardSection', 'studentRegSection', 'teacherExamSection', 'studentExamSection', 'createUserSection'];ss.forEach(function(s) { var el = document.getElementById(s); if(el) el.classList.add('hidden'); });var active = document.getElementById(id); if(active) active.classList.remove('hidden');}function logout() {document.getElementById('appPage').style.display = 'none';document.getElementById('loginPage').style.display = 'flex';}let timerInterval;function startExamControl() {var id = document.getElementById('examStudId').value.trim();if(!id) return alert('Maaloo dursitanii ID Barataa galchaa!');document.getElementById('liveQuizArea').classList.remove('hidden');let t = 1200;clearInterval(timerInterval);timerInterval = setInterval(() => {let m = parseInt(t / 60, 10); let s = parseInt(t % 60, 10);m = m < 10 ? "0" + m : m; s = s < 10 ? "0" + s : s;document.getElementById('timer').innerText = m + ":" + s;if (--t < 0) { clearInterval(timerInterval); endExamControl(); }}, 1000);}function endExamControl() {clearInterval(timerInterval); alert("Xumurameera!");document.getElementById('liveQuizArea').classList.add('hidden');showSection('dashboardSection');}
