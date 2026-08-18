@@ -73,52 +73,6 @@
                 <div class="actions"><button type="submit" class="btn btn-success">💾 Barataa Kuusi</button></div>
             </form>
         </div>
-async function executeLogin(event) {
-    event.preventDefault(); // Fuulli akka of-umaan refresh hin goone dhowwa
-    
-    const userInput = {
-        username: document.getElementById('Login_Username').value,
-        password: document.getElementById('Login_Password').value
-    };
-
-    const response = await fetch('/api/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(userInput)
-    });
-
-    const result = await response.json();
-
-    if (result.success) {
-        alert(result.message);
-        
-        // --- SADDARKAA EEYYAMAA (Role-Based Interface Logic) ---
-        const role = result.role; // Admin, Teacher, Student
-        
-        if (role === "Admin") {
-            alert("Gadhi lakkifameera: Gahee Admin!");
-            // Admin meeshaalee hunda argu danda'a
-            document.querySelectorAll('.menu-btn').forEach(btn => btn.style.display = 'block');
-        } 
-        else if (role === "Teacher") {
-            alert("Gadhi lakkifameera: Gahee Barsiisaa!");
-            // Barsiisaan uunkaa barataa galmeessuu fi gaaffii ni arga, uunkaa dhuunfaa tokko tokko immoo ni dhoksa
-            switchForm('galmee-gaaffii');
-            // Frm_Barattoota_Galmeessuu dhoksuuf fakkeenya:
-            // document.querySelector("[onclick=\"switchForm('galmee-barataa')\"]").style.display = 'none';
-        } 
-        else if (role === "Student") {
-            alert("Gadhi lakkifameera: Gahee Barataa!");
-            switchForm('fudhadhu-qormaata');
-            document.querySelectorAll('.menu-btn').forEach(btn => {
-                if(btn.getAttribute('onclick') !== "switchForm('fudhadhu-qormaata')") {
-                    btn.style.display = 'none';
-                }
-            });
-        }
-    } else {
-        alert("Fashala: " + result.message);
-    }
 
         <!-- 3. UUNKAA GALMEESSA GAAFFII -->
         <div id="galmee-gaaffii" class="form-card">
@@ -170,6 +124,55 @@ async function executeLogin(event) {
 </div>
 
 <script>
+   / Koodii ittiin uunkaa Login irraa gara server'tti ergan (Login Logic)
+async function executeLogin(event) {
+    event.preventDefault(); // Fuulli akka of-umaan refresh hin goone dhowwa
+    
+    const userInput = {
+        username: document.getElementById('Login_Username').value,
+        password: document.getElementById('Login_Password').value
+    };
+
+    const response = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(userInput)
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
+        alert(result.message);
+        
+        // --- SADDARKAA EEYYAMAA (Role-Based Interface Logic) ---
+        const role = result.role; // Admin, Teacher, Student
+        
+        if (role === "Admin") {
+            alert("Gadhi lakkifameera: Gahee Admin!");
+            // Admin meeshaalee hunda argu danda'a
+            document.querySelectorAll('.menu-btn').forEach(btn => btn.style.display = 'block');
+        } 
+        else if (role === "Teacher") {
+            alert("Gadhi lakkifameera: Gahee Barsiisaa!");
+            // Barsiisaan uunkaa barataa galmeessuu fi gaaffii ni arga, uunkaa dhuunfaa tokko tokko immoo ni dhoksa
+            switchForm('galmee-gaaffii');
+            // Frm_Barattoota_Galmeessuu dhoksuuf fakkeenya:
+            // document.querySelector("[onclick=\"switchForm('galmee-barataa')\"]").style.display = 'none';
+        } 
+        else if (role === "Student") {
+            alert("Gadhi lakkifameera: Gahee Barataa!");
+            // Barataan Qormaata Online qofa arga, kaan jalaa ni dhokata
+            switchForm('fudhadhu-qormaata');
+            document.querySelectorAll('.menu-btn').forEach(btn => {
+                if(btn.getAttribute('onclick') !== "switchForm('fudhadhu-qormaata')") {
+                    btn.style.display = 'none';
+                }
+            });
+        }
+    } else {
+        alert("Fashala: " + result.message);
+    }
+}
     // Koodii uunkaalee gidduu ittiin naanna'an (Tab Switching Logic)
     function switchForm(formId) {
         document.querySelectorAll('.form-card').forEach(card => card.classList.remove('active'));
