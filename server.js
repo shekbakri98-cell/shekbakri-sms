@@ -8,9 +8,10 @@ app.use(express.json());
 app.use(cors());
 app.use(express.static('public'));
 
+// Bakki kun sirreeffameera (Jecha danda'amne jedhu keessatti \ fayyadamneerra)
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('Kuusaa Dataa (MongoDB) milkiidhaan walqabateera...'))
-  .catch(err => console.error('Kuusaa dataatti walqabachuun hin danda'amne:', err));
+  .catch(err => console.error('Kuusaa dataatti walqabachuun hin danda\'amne:', err));
 
 const studentSchema = new mongoose.Schema({
   studentId: { type: String, required: true, unique: true },
@@ -42,4 +43,4 @@ app.get('/api/students', async (req, res) => {
 });
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Sarvariin Toora http://localhost:\${PORT} irratti jalqabeera.`));
+app.listen(PORT, () => console.log(`Sarvariin Toora http://localhost:${PORT} irratti jalqabeera.`));
