@@ -16,12 +16,13 @@ app.get('/qormaata', (req, res) => {
     res.sendFile(path.join(__dirname, 'qormaata.html'));
 });
 
-// --- SADDARKAA SIRREEFFAMAA: Host guutummaatti sirreeffameera ---
+// --- SADDARKAA SIRREEFFAMAA: Password fi Ragaaleen Clever Cloud Sirreeffamaniiru ---
 const db = mysql.createConnection({
     host: 'byaolahodhgmbpyqhb5u-mysql.services.clever-cloud.com',       
     user: 'uoly3lagqinw20jv',            
-    password: 'byaolahodhgmbpyqhb5u',    
-    database: 'byaolahodhgmbpyqhb5u'
+    password: 'osG4IxXTc3Dg4ajZbXuv',    // <--- Asirratti PASSWORD isa sirrii sirreesseera!
+    database: 'byaolahodhgmbpyqhb5u',
+    port: 3306                           // Port dabalameera
 });
 
 db.connect((err) => {
