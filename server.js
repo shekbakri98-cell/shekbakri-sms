@@ -20,9 +20,9 @@ app.get('/qormaata', (req, res) => {
 const db = mysql.createConnection({
     host: 'byaolahodhgmbpyqhb5u-mysql.services.clever-cloud.com',       
     user: 'uoly3lagqinw20jv',            
-    password: 'osG4IxXTc3Dg4ajZbXuv',    // <--- Asirratti PASSWORD isa sirrii sirreesseera!
+    password: 'osG4IxXTc3Dg4ajZbXuv',    // <--- Password kee isa sirrii ti
     database: 'byaolahodhgmbpyqhb5u',
-    port: 3306                           // Port dabalameera
+    port: 3306                           
 });
 
 db.connect((err) => {
@@ -31,9 +31,48 @@ db.connect((err) => {
         return;
     }
     console.log('Kuusaan deetaa MySQL Online milkiin wal-qunnameera!');
+
+    // --- TAABLEOTA OFIIN AKKA UUMU GOCHUU ---
+    
+    // 1. Table tblstudent Uumuu (Yoo duraan hin jirre)
+    const sql_student = `CREATE TABLE IF NOT EXISTS tblstudent (
+        ID_Barataa INT AUTO_INCREMENT PRIMARY KEY,
+        Maqaa VARCHAR(100),
+        Maqaa_Abbaa VARCHAR(100),
+        Maqaa_Akaakayuu VARCHAR(100),
+        Saala VARCHAR(10),
+        Umrii INT,
+        Kutaa VARCHAR(50),
+        Aradaa VARCHAR(100),
+        Ganda VARCHAR(100),
+        Bilbila VARCHAR(20),
+        FaydaAliasNumber VARCHAR(100)
+    )`;
+    db.query(sql_student, (err) => { 
+        if (err) console.error("Error tblstudent uumuu irratti: " + err.message); 
+        else console.log("Table 'tblstudent' qophaa'aa dha/uumameera.");
+    });
+
+    // 2. Table tbl_Gaaffiiwwan Uumuu (Yoo duraan hin jirre)
+    const sql_gaaffii = `CREATE TABLE IF NOT EXISTS tbl_Gaaffiiwwan (
+        ID_Gaaffii INT AUTO_INCREMENT PRIMARY KEY,
+        Kutaa VARCHAR(50),
+        Gosa_Barnootaa VARCHAR(100),
+        Gosa_Qormaataa VARCHAR(100),
+        Gaaffii TEXT,
+        Filannoo_A TEXT,
+        Filannoo_B TEXT,
+        Filannoo_C TEXT,
+        Filannoo_D TEXT,
+        Deebii_Sirrii VARCHAR(10)
+    )`;
+    db.query(sql_gaaffii, (err) => { 
+        if (err) console.error("Error tbl_Gaaffiiwwan uumuu irratti: " + err.message); 
+        else console.log("Table 'tbl_Gaaffiiwwan' qophaa'aa dha/uumameera.");
+    });
 });
 
-// 3. Ragaa Galmee Barataa Kuusuuf (Upload API - FaydaAliasNumber Hidha)
+// 3. Ragaa Galmee Barataa Kuusuuf (Upload API)
 app.post('/galmeessi', (req, res) => {
     const sql = `INSERT INTO tblstudent 
     (Maqaa, Maqaa_Abbaa, Maqaa_Akaakayuu, Saala, Umrii, Kutaa, Aradaa, Ganda, Bilbila, FaydaAliasNumber) 
