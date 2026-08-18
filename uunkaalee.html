@@ -73,8 +73,6 @@
                 <div class="actions"><button type="submit" class="btn btn-success">💾 Barataa Kuusi</button></div>
             </form>
         </div>
-
-      // Koodii ittiin uunkaa Login irraa gara server'tti ergan (Login Logic)
 async function executeLogin(event) {
     event.preventDefault(); // Fuulli akka of-umaan refresh hin goone dhowwa
     
@@ -111,7 +109,6 @@ async function executeLogin(event) {
         } 
         else if (role === "Student") {
             alert("Gadhi lakkifameera: Gahee Barataa!");
-            // Barataan Qormaata Online qofa arga, kaan jalaa ni dhokata
             switchForm('fudhadhu-qormaata');
             document.querySelectorAll('.menu-btn').forEach(btn => {
                 if(btn.getAttribute('onclick') !== "switchForm('fudhadhu-qormaata')") {
