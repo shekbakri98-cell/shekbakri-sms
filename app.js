@@ -5,23 +5,19 @@ let selectedAnsValue = null;
 
 // Fuula Dashboard fi Kutaalee adda addaa gargar jijjiiruuf (Navigation)
 function showSection(sectionId) {
-    // Kutaalee hunda dhoksi
     const sections = ['dashboardSection', 'studentRegSection', 'teacherExamSection', 'studentExamSection', 'createUserSection'];
     sections.forEach(id => {
         const el = document.getElementById(id);
         if (el) el.classList.add('hidden');
     });
     
-    // Isa filatame qofa agarsiisi
     const activeSection = document.getElementById(sectionId);
     if (activeSection) activeSection.classList.remove('hidden');
     
-    // Mallattoo active jedhu menu irratti jijjiiri
     const navButtons = document.querySelectorAll('nav .btn-nav');
     navButtons.forEach(btn => btn.classList.remove('active'));
     
-    // Button cuqaasame addaan baasi
-    const activeBtn = Array.from(navButtons).find(btn => btn.getAttribute('onclick').includes(sectionId));
+    const activeBtn = Array.from(navButtons).find(btn => btn.getAttribute('onclick') && btn.getAttribute('onclick').includes(sectionId));
     if (activeBtn) activeBtn.classList.add('active');
 
     if(sectionId === 'dashboardSection') fetchStats();
@@ -42,6 +38,26 @@ async function fetchStats() {
     } catch(e) { console.error("Stats Fetch Error:", e); }
 }
 
+// Login Form Event Listener (CRITICAL FIX: CALLATTIDHAAN AKKA SEENU TAASIFAMEERA)
+document.getElementById('loginForm').addEventListener('submit', function(e) {
+    e.preventDefault(); // Fuulli akka refresh hin taane dhowwa
+    
+    const username = document.getElementById('loginUser').value.trim();
+    const password = document.getElementById('loginPass').value.trim();
+    
+    console.log("Yaalii Seensaa:", username, password);
+
+    // --- INTERNET/DATABASE MALEE KALLATTIIN SEENSUU ---
+    if(username === "admin" && password === "admin123") {
+        document.getElementById('loginPage').classList.add('hidden');
+        document.getElementById('appPage').classList.remove('hidden');
+        showSection('dashboardSection');
+        return false;
+    } else {
+        alert("Username ykn Password dogoggora! Maaloo 'admin' fi 'admin123' fayyadami.");
+    }
+});
+
 // VBA Logic: GaaffiiFilterGodhi & Double-check Check
 async function startExam() {
     const studentId = document.getElementById('examStudId').value;
@@ -56,7 +72,6 @@ async function startExam() {
     const data = await res.json();
 
     if (!res.ok) {
-        // VBA Alert: Double Fudhachuu Ittisuu
         return alert(data.message);
     }
 
@@ -68,8 +83,6 @@ async function startExam() {
     currentIndex = 0;
     document.getElementById('quizBox').classList.remove('hidden');
     displayQuestion();
-    
-    // VBA: TotalSeconds = 1200 (Daqiiqaa 20)
     startTimer(1200); 
 }
 
@@ -96,8 +109,11 @@ function displayQuestion() {
 function selectAns(ans) {
     selectedAnsValue = ans;
     clearSelectionStyles();
-    document.getElementById(`btnOpt${ans}`).style.backgroundColor = "#eab308";
-    document.getElementById(`btnOpt${ans}`).style.color = "#0f172a";
+    const btn = document.getElementById(`btnOpt${ans}`);
+    if(btn) {
+        btn.style.backgroundColor = "#eab308";
+        btn.style.color = "#0f172a";
+    }
 }
 
 function clearSelectionStyles() {
@@ -110,7 +126,6 @@ function clearSelectionStyles() {
     });
 }
 
-// VBA Logic: btnIttiAanu_Click
 async function nextQuiz() {
     if (!selectedAnsValue) {
         return alert("Maaloo odoo gara gaaffii itti aanutti hin dabarre deebii filadhu!");
@@ -122,7 +137,6 @@ async function nextQuiz() {
     const examType = document.getElementById('examTypeSelect').value;
     const currentQ = questions[currentIndex];
 
-    // Deebii Save Gochuu
     const res = await fetch('/api/answers/save', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -150,7 +164,6 @@ function prevQuiz() {
     }
 }
 
-// VBA Logic: btnXumuri_Click
 function submitExam() {
     clearInterval(timerInterval);
     alert("Qormaanni keessan milkaa'inaan xumurameera! Amma waraqaan bu'aa keessanii ni baha.");
@@ -174,42 +187,6 @@ function startTimer(duration) {
         }
     }, 1000);
 }
-
-// Login Form Event Listener
-document.getElementById('loginForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const username = document.getElementById('loginUser').value;
-    const password = document.getElementById('loginPass').value;
-    
-    // Hanga database user uamutti seensa gabaabaa (Test Bypass)
-    if(username === "admin" && password === "admin123") {
-        document.getElementById('loginPage').classList.add('hidden');
-        document.getElementById('appPage').classList.remove('hidden');
-        showSection('dashboardSection');
-        return;
-    }
-
-    try {
-        const res = await fetch('/api/users/login', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({username, password})
-        });
-        const data = await res.json();
-        if(res.ok && data.success) {
-            document.getElementById('loginPage').classList.add('hidden');
-            document.getElementById('appPage').classList.remove('hidden');
-            showSection('dashboardSection');
-        } else {
-            alert(data.message || "Username ykn Password dogoggora!");
-        }
-    } catch (err) {
-        alert("Sarvariin kuusaa dataa waliin wal hin qabanne, maaloo login 'admin' fi 'admin123' fayyadami.");
-        document.getElementById('loginPage').classList.add('hidden');
-        document.getElementById('appPage').classList.remove('hidden');
-        showSection('dashboardSection');
-    }
-});
 
 function logout() {
     document.getElementById('appPage').classList.add('hidden');
@@ -260,4 +237,15 @@ document.getElementById('questionForm').addEventListener('submit', async (e) => 
         questionText: document.getElementById('qText').value,
         imageUrl: document.getElementById('qImg').value,
         optionA: document.getElementById('optA').value,
-Use code with caution.optionB: document.getElementById('optB').value,optionC: document.getElementById('optC').value,optionD: document.getElementById('optD').value,correctAnswer: document.getElementById('qCorrect').value};const res = await fetch('/api/questions', {method: 'POST',headers: {'Content-Type': 'application/json'},body: JSON.stringify(body)});if(res.ok) { alert('Gaaffiin kuusameera!'); document.getElementById('questionForm').reset(); }});
+        optionB: document.getElementById('optB').value,
+        optionC: document.getElementById('optC').value,
+        optionD: document.getElementById('optD').value,
+        correctAnswer: document.getElementById('qCorrect').value
+    };
+    const res = await fetch('/api/questions', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(body)
+    });
+    if(res.ok) { alert('Gaaffiin kuusameera!'); document.getElementById('questionForm').reset(); }
+});
