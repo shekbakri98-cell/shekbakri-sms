@@ -4,101 +4,150 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shek Bekri Sapalo Secondary School</title>
-    <!-- Tailwind CSS CDN backup alternative -->
-    <link rel="stylesheet" href="https://cloudflare.com">
     <style>
-        /* CSS dabalataa yoo internetiin Tailwind fiduu dadhabe bifa bareedaa qabaachuuf */
-        body { background-color: #0f172a; color: #f8fafc; font-family: sans-serif; }
-        .btn { padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; }
+        /* GLOBAL DESIGN */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background-color: #0f172a; color: #f8fafc; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; min-h-screen: 100vh; display: flex; flex-direction: column; }
+        
+        /* LOGIN PAGE */
+        #loginPage { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
+        .login-box { background-color: #1e293b; padding: 40px; rounded-radius: 12px; border: 1px solid #334155; width: 100%; max-width: 400px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
+        .login-box h1 { text-align: center; color: #facc15; font-size: 2rem; margin-bottom: 24px; font-weight: 800; letter-spacing: 1px; }
+        
+        /* INPUTS & LABELS */
+        .form-group { margin-bottom: 16px; }
+        .form-group label { display: block; font-size: 0.875rem; font-weight: 600; color: #94a3b8; margin-bottom: 6px; }
+        .form-group input, .form-group select, .form-group textarea { w-full; width: 100%; padding: 12px; border-radius: 6px; background-color: #0f172a; border: 1px solid #475569; color: #fff; font-size: 1rem; outline: none; transition: 0.2s; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: #22d3ee; box-shadow: 0 0 0 2px rgba(34, 211, 238, 0.2); }
+        
+        /* BUTTONS */
+        .btn-cyan { width: 100%; background-color: #06b6d4; color: #0f172a; padding: 12px; border: none; border-radius: 6px; font-size: 1.1rem; font-weight: 700; cursor: pointer; transition: 0.2s; }
+        .btn-cyan:hover { background-color: #0891b2; }
+        .btn-nav { width: 100%; text-align: left; padding: 12px; border: none; background: none; color: #f8fafc; font-size: 1rem; font-weight: 600; cursor: pointer; border-radius: 6px; transition: 0.2s; }
+        .btn-nav:hover { background-color: #1e293b; }
+        .btn-nav.active { color: #facc15; }
+        .btn-logout { background-color: rgba(127, 29, 29, 0.4); color: #f87171; border: 1px solid #7f1d1d; margin-top: 40px; }
+        .btn-logout:hover { background-color: #7f1d1d; }
+
+        /* MAIN APP LAYOUT */
+        #appPage { display: flex; flex-direction: column; flex: 1; min-height: 100vh; }
+        header { background-color: #0891b2; color: #0f172a; text-align: center; padding: 16px; font-size: 1.3rem; font-weight: 900; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        .app-container { display: flex; flex: 1; flex-direction: row; }
+        
+        /* SIDEBAR */
+        nav { width: 260px; background-color: #1e293b; padding: 20px; display: flex; flex-direction: column; gap: 8px; border-right: 1px solid #334155; }
+        
+        /* MAIN CONTENT AREA */
+        main { flex: 1; padding: 30px; background-color: #0f172a; overflow-y: auto; }
+        .hidden { display: none !important; }
+        
+        /* DASHBOARD CARDS */
+        .section-title { font-size: 1.75rem; font-weight: 700; color: #facc15; margin-bottom: 20px; border-bottom: 1px solid #334155; padding-bottom: 10px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; }
+        .card { background-color: #1e293b; padding: 24px; border-radius: 10px; border: 1px solid #334155; }
+        .card p { font-size: 0.875rem; color: #94a3b8; }
+        .card h3 { font-size: 2.25rem; font-weight: 900; margin-top: 8px; color: #22d3ee; }
+        .card-sub h3 { color: #facc15; font-size: 1.5rem; }
+
+        /* QUIZ BOX STYLES */
+        .quiz-header { display: flex; justify-content: space-between; align-items: center; background-color: #1e293b; padding: 15px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #334155; }
+        .timer { background-color: #facc15; color: #0f172a; font-weight: 900; padding: 8px 16px; border-radius: 6px; font-size: 1.1rem; }
+        .quiz-body { background-color: #1e293b; padding: 30px; border-radius: 12px; border: 1px solid #334155; }
+        .quiz-question { font-size: 1.25rem; font-weight: 700; margin-bottom: 20px; }
+        .options-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 15px; }
+        .opt-btn { text-align: left; padding: 14px; background-color: #0f172a; border: 1px solid #475569; color: #fff; border-radius: 8px; cursor: pointer; font-size: 1rem; transition: 0.2s; }
+        .opt-btn:hover { background-color: #334155; }
+        .quiz-footer { display: flex; justify-content: space-between; margin-top: 25px; border-top: 1px solid #334155; padding-top: 20px; }
+        .btn-action { padding: 10px 24px; border: none; border-radius: 6px; font-weight: 700; cursor: pointer; color: white; }
+        
+        /* FORM CONTAINERS */
+        .form-container { background-color: #1e293b; padding: 30px; border-radius: 12px; border: 1px solid #334155; max-width: 600px; margin: 0 auto; }
+        .flex-row-btn { display: flex; gap: 10px; margin-top: 15px; }
+
+        @media (max-width: 768px) {
+            .app-container { flex-direction: column; }
+            nav { width: 100%; border-right: none; border-bottom: 1px solid #334155; }
+        }
     </style>
 </head>
-<body class="bg-slate-950 font-sans text-gray-100 min-h-screen">
+<body>
 
     <!-- LOGIN SCREEN -->
-    <div id="loginPage" class="flex items-center justify-center min-h-screen p-4">
-        <div class="bg-slate-900 p-8 rounded-2xl shadow-2xl w-full max-w-md border border-slate-800">
-            <h1 class="text-3xl font-extrabold text-center text-yellow-400 tracking-wider mb-6">WELCOM</h1>
-            <form id="loginForm" class="space-y-4">
-                <div>
-                    <label class="block text-sm font-semibold text-gray-400">Username</label>
-                    <input type="text" id="loginUser" required class="w-full p-3 rounded bg-slate-800 border border-slate-700 text-white mt-1 outline-none">
+    <div id="loginPage">
+        <div class="login-box">
+            <h1>WELCOM</h1>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" id="loginUser" required>
                 </div>
-                <div>
-                    <label class="block text-sm font-semibold text-gray-400">Password</label>
-                    <input type="password" id="loginPass" required class="w-full p-3 rounded bg-slate-800 border border-slate-700 text-white mt-1 outline-none">
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="loginPass" required>
                 </div>
-                <button type="submit" class="w-full bg-cyan-500 hover:bg-cyan-600 text-slate-900 p-3 rounded-lg font-bold text-lg transition duration-200 mt-2">Login</button>
+                <button type="submit" class="btn-cyan">Login</button>
             </form>
         </div>
     </div>
 
     <!-- MAIN APP SCREEN (HIDDEN UNTIL LOGIN) -->
-    <div id="appPage" class="hidden min-h-screen flex flex-col">
-        <header class="bg-cyan-600 p-4 text-slate-900 text-center font-black text-xl shadow-lg">
+    <div id="appPage" class="hidden">
+        <header>
             Mana Barnoota Sheek Bakrii Saphaloo Sad.2ffaa (Shek Bekri Sapalo Secondary School)
         </header>
 
-        <div class="flex flex-col md:flex-row flex-1">
+        <div class="app-container">
             <!-- Sidebar Navigation -->
-            <nav class="w-full md:w-64 bg-slate-900 p-4 space-y-2 border-r border-slate-800 flex flex-row md:flex-col overflow-x-auto md:overflow-x-visible">
-                <button onclick="showSection('dashboardSection')" class="w-full text-left p-3 rounded hover:bg-slate-800 font-bold text-yellow-400 whitespace-nowrap">Dashboard</button>
-                <button onclick="showSection('studentRegSection')" class="w-full text-left p-3 rounded hover:bg-slate-800 font-bold whitespace-nowrap">Galmeessa Barataa</button>
-                <button onclick="showSection('teacherExamSection')" class="w-full text-left p-3 rounded hover:bg-slate-800 font-bold whitespace-nowrap">Foormii Barsiisaa</button>
-                <button onclick="showSection('studentExamSection')" class="w-full text-left p-3 rounded hover:bg-slate-800 font-bold whitespace-nowrap">Qormaata Barataa</button>
-                <button onclick="showSection('createUserSection')" class="w-full text-left p-3 rounded hover:bg-slate-800 font-bold text-emerald-400 whitespace-nowrap">Frm_CreateUser</button>
-                <button onclick="logout()" class="w-full text-left p-3 rounded bg-red-900/50 text-red-400 hover:bg-red-900 font-bold md:mt-10 whitespace-nowrap">Cufi (Logout)</button>
+            <nav>
+                <button onclick="showSection('dashboardSection')" class="btn-nav active">Dashboard</button>
+                <button onclick="showSection('studentRegSection')" class="btn-nav">Galmeessa Barataa</button>
+                <button onclick="showSection('teacherExamSection')" class="btn-nav">Foormii Barsiisaa</button>
+                <button onclick="showSection('studentExamSection')" class="btn-nav">Qormaata Barataa</button>
+                <button onclick="showSection('createUserSection')" class="btn-nav" style="color: #34d399;">Frm_CreateUser</button>
+                <button onclick="logout()" class="btn-nav btn-logout">Cufi (Logout)</button>
             </nav>
 
             <!-- Content Area -->
-            <main class="flex-1 p-6 bg-slate-800 overflow-y-auto">
+            <main>
                 
                 <!-- DASHBOARD SECTION -->
                 <section id="dashboardSection" class="space-y-6">
-                    <h2 class="text-2xl font-bold border-b border-slate-700 pb-2 text-yellow-400">Dashboard Overview</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div class="bg-slate-900 p-6 rounded-xl border border-slate-700"><p class="text-sm text-gray-400">Waliigala Barattootaa</p><p id="statTotal" class="text-4xl font-black mt-2 text-cyan-400">0</p></div>
-                        <div class="bg-slate-900 p-6 rounded-xl border border-slate-700"><p class="text-sm text-gray-400">Dhiira</p><p id="statDhiira" class="text-4xl font-black mt-2 text-blue-400">0</p></div>
-                        <div class="bg-slate-900 p-6 rounded-xl border border-slate-700"><p class="text-sm text-gray-400">Dubara</p><p id="statDubar" class="text-4xl font-black mt-2 text-pink-400">0</p></div>
+                    <h2 class="section-title">Dashboard Overview</h2>
+                    <div class="grid-3">
+                        <div class="card"><p>Waliigala Barattootaa</p><h3 id="statTotal">0</h3></div>
+                        <div class="card"><p>Dhiira</p><h3 id="statDhiira" style="color: #60a5fa;">0</h3></div>
+                        <div class="card"><p>Dubara</p><h3 id="statDubar" style="color: #f472b6;">0</h3></div>
                     </div>
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
-                        <div class="bg-slate-900 p-4 rounded-lg border border-slate-700 text-center"><p class="text-sm text-gray-400">Kutaa 9</p><p id="statG9" class="text-2xl font-bold mt-1 text-yellow-400">0</p></div>
-                        <div class="bg-slate-900 p-4 rounded-lg border border-slate-700 text-center"><p class="text-sm text-gray-400">Kutaa 10</p><p id="statG10" class="text-2xl font-bold mt-1 text-yellow-400">0</p></div>
-                        <div class="bg-slate-900 p-4 rounded-lg border border-slate-700 text-center"><p class="text-sm text-gray-400">Kutaa 11</p><p id="statG11" class="text-2xl font-bold mt-1 text-yellow-400">0</p></div>
-                        <div class="bg-slate-900 p-4 rounded-lg border border-slate-700 text-center"><p class="text-sm text-gray-400">Kutaa 12</p><p id="statG12" class="text-2xl font-bold mt-1 text-yellow-400">0</p></div>
+                    <div class="grid-4">
+                        <div class="card card-sub"><p>Kutaa 9</p><h3 id="statG9">0</h3></div>
+                        <div class="card card-sub"><p>Kutaa 10</p><h3 id="statG10">0</h3></div>
+                        <div class="card card-sub"><p>Kutaa 11</p><h3 id="statG11">0</h3></div>
+                        <div class="card card-sub"><p>Kutaa 12</p><h3 id="statG12">0</h3></div>
                     </div>
                 </section>
 
                 <!-- STUDENT REGISTRATION -->
-                <section id="studentRegSection" class="hidden max-w-xl mx-auto bg-slate-900 p-6 rounded-xl border border-slate-700">
-                    <h2 class="text-xl font-bold mb-4 text-center text-yellow-400">Barattoota Kee Lakkfi Maqaa Barreessi</h2>
-                    <form id="studentForm" class="space-y-4">
-                        <div><label class="text-sm text-gray-400">ID_Barataa</label><input type="text" id="regId" required class="w-full p-2.5 rounded bg-slate-800 border border-slate-700 mt-1 text-white outline-none"></div>
-                        <div><label class="text-sm text-gray-400">Maqaa_Barataa</label><input type="text" id="regName" required class="w-full p-2.5 rounded bg-slate-800 border border-slate-700 mt-1 text-white outline-none"></div>
-                        <div>
-                            <label class="text-sm text-gray-400">Kutaa</label>
-                            <select id="regGrade" required class="w-full p-2.5 rounded bg-slate-800 border border-slate-700 mt-1 text-white outline-none"><option value="9">Kutaa 9</option><option value="10">Kutaa 10</option><option value="11">Kutaa 11</option><option value="12">Kutaa 12</option></select>
-                        </div>
-                        <div>
-                            <label class="text-sm text-gray-400">Saala (Gender)</label>
-                            <select id="regGender" required class="w-full p-2.5 rounded bg-slate-800 border border-slate-700 mt-1 text-white outline-none"><option value="Dhiira">Dhiira</option><option value="Dubara">Dubara</option></select>
-                        </div>
-                        <div class="flex space-x-2 pt-2">
-                            <button type="submit" class="flex-1 bg-yellow-500 text-slate-900 font-bold p-2.5 rounded hover:bg-yellow-600 transition">Save</button>
-                            <button type="reset" class="bg-slate-700 p-2.5 rounded hover:bg-slate-600 transition">Haaraa</button>
-                        </div>
-                    </form>
+                <section id="studentRegSection" class="hidden">
+                    <div class="form-container">
+                        <h2 class="section-title" style="text-align: center;">Barattoota Kee Lakkfi Maqaa Barreessi</h2>
+                        <form id="studentForm">
+                            <div class="form-group"><label>ID_Barataa</label><input type="text" id="regId" required></div>
+                            <div class="form-group"><label>Maqaa_Barataa</label><input type="text" id="regName" required></div>
+                            <div class="form-group">
+                                <label>Kutaa</label>
+                                <select id="regGrade" required><option value="9">Kutaa 9</option><option value="10">Kutaa 10</option><option value="11">Kutaa 11</option><option value="12">Kutaa 12</option></select>
+                            </div>
+                            <div class="form-group">
+                                <label>Saala (Gender)</label>
+                                <select id="regGender" required><option value="Dhiira">Dhiira</option><option value="Dubara">Dubara</option></select>
+                            </div>
+                            <div class="flex-row-btn">
+                                <button type="submit" class="btn-cyan" style="background-color: #eab308;">Save</button>
+                                <button type="reset" class="btn-cyan" style="background-color: #475569; color: white;">Haaraa</button>
+                            </div>
+                        </form>
+                    </div>
                 </section>
 
                 <!-- TEACHER QUESTION INPUT -->
-                <section id="teacherExamSection" class="hidden bg-slate-900 p-6 rounded-xl border border-slate-700">
-                    <h2 class="text-xl font-bold mb-4 text-yellow-400 border-b border-slate-700 pb-2">Foormii Barsiisaan Gaaffii Itti Barreessu</h2>
-                    <form id="questionForm" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div class="space-y-3">
-                            <div><label class="text-sm text-gray-400">ID_Qormaata</label><input type="text" id="qExamId" required class="w-full p-2 rounded bg-slate-800 border border-slate-700 mt-1 text-white outline-none"></div>
-                            <div><label class="text-sm text-gray-400">ID_Gaaffii</label><input type="text" id="qId" required class="w-full p-2 rounded bg-slate-800 border border-slate-700 mt-1 text-white outline-none"></div>
-                            <div><label class="text-sm text-gray-400">Kutaa</label><select id="qGrade" class="w-full p-2 rounded bg-slate-800 border border-slate-700 mt-1 text-white outline-none"><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option></select></div>
-                            <div><label class="text-sm text-gray-400">Gosa_Barnootaa</label><input type="text" id="qSubject" required class="w-full p-2 rounded bg-slate-800 border border-slate-700 mt-1 text-white outline-none"></div>
-                            <div><label class="text-sm text-gray-400">Gosa_Qormaataa</label><select id="qType" class="w-full p-2 rounded bg-slate-800 border border-slate-700 mt-1 text-white outline-none"><option value="Mid">Mid Exam</option><option value="Final">Final Exam</option></select></div>
-                        </div>
-                        <div class="space-y-3">
-                            <div><label class="text-sm text-gray-400">Fakkii_Gaaffii (Image URL)</label><input type="text" id="qImg" class="w-full p-2 rounded bg-slate-800 border border-slate-700 mt-1 text-white outline-none" placeholder="Optional URL"></div>
