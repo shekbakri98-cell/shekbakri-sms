@@ -2,23 +2,22 @@
 <html lang="om">
 <head>
     <meta charset="UTF-8">
-    <title>MBS Sheek Bakrii - Management Web App</title>
+    <title>Dashboard - Sheek Bakrii Secondary School</title>
     <style>
         :root {
             --primary: #1e3a8a;
             --secondary: #0284c7;
             --success: #16a34a;
-            --warning: #ea580c;
             --bg: #f8fafc;
             --text: #1e293b;
         }
         body { font-family: 'Segoe UI', Arial, sans-serif; background-color: var(--bg); margin: 0; padding: 0; color: var(--text); }
         .dashboard { display: grid; grid-template-columns: 260px 1fr; min-height: 100vh; }
         
-        /* Sidebar Menu */
+        /* Sidebar Dizaayinii */
         .sidebar { background-color: var(--primary); color: white; padding: 25px 20px; }
-        .sidebar h2 { font-size: 16px; text-transform: uppercase; margin-bottom: 30px; border-bottom: 2px solid rgba(255,255,255,0.1); padding-bottom: 15px; text-align: center; }
-        .nav-btn { display: block; width: 100%; padding: 12px; margin-bottom: 10px; background: none; border: none; color: #cbd5e1; text-align: left; font-size: 14px; cursor: pointer; border-radius: 6px; transition: 0.3s; }
+        .sidebar h2 { font-size: 18px; text-transform: uppercase; margin-bottom: 30px; border-bottom: 2px solid rgba(255,255,255,0.1); padding-bottom: 15px; text-align: center; }
+        .nav-btn { display: block; width: 100%; padding: 12px; margin-bottom: 10px; background: none; border: none; color: #cbd5e1; text-align: left; font-size: 15px; cursor: pointer; border-radius: 6px; transition: 0.3s; }
         .nav-btn:hover, .nav-btn.active { background-color: var(--secondary); color: white; font-weight: bold; }
         
         /* Main Content */
@@ -26,6 +25,13 @@
         .header { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; }
         .header h1 { margin: 0; font-size: 22px; color: var(--primary); }
         
+        /* Stats Cards */
+        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 30px; }
+        .stat-card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); border-left: 5px solid var(--secondary); }
+        .stat-card.students { border-left-color: var(--success); }
+        .stat-card h3 { margin: 0 0 5px 0; font-size: 14px; color: #64748b; text-transform: uppercase; }
+        .stat-card .num { font-size: 28px; font-weight: bold; color: var(--text); }
+
         /* Form Area */
         .form-container { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
@@ -37,46 +43,64 @@
         /* Action Buttons */
         .actions { grid-column: span 2; display: flex; justify-content: flex-end; gap: 15px; margin-top: 15px; padding-top: 15px; border-top: 1px solid #e2e8f0; }
         .btn { padding: 10px 24px; border: none; border-radius: 6px; font-size: 14px; font-weight: bold; cursor: pointer; transition: 0.2s; }
+        .btn-primary { background-color: var(--secondary); color: white; }
         .btn-success { background-color: var(--success); color: white; }
     </style>
 </head>
 <body>
 
 <div class="dashboard">
+    <!-- Sidebar Left -->
     <div class="sidebar">
         <h2>MBS Sheek Bakrii</h2>
-        <button class="nav-btn active">📝 Galmee Barattootaa</button>
-        <button class="nav-btn">📊 Dashboard Home</button>
+        <button class="nav-btn active">📊 Dashboard Home</button>
+        <button class="nav-btn" onclick="window.location.href='/qormaata'">📝 Kutaa Qormaataa</button>
+        <button class="nav-btn">🗂️ Gabaasa Guutuu</button>
+        <button class="nav-btn">⚙️ Settiingii</button>
     </div>
 
+    <!-- Main Content Right -->
     <div class="main-content">
         <div class="header">
-            <h1>School Management System (Online)</h1>
+            <h1>School Management System</h1>
             <div style="font-size: 14px; color: #64748b;">Barsiisaa: <b>Anwaar</b></div>
         </div>
 
+        <div class="stats-grid">
+            <div class="stat-card students">
+                <h3>Waliigala Barattootaa</h3>
+                <div class="num" id="total-students">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>Kutaa 10ffaa</h3>
+                <div class="num">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>Kutaa 12ffaa</h3>
+                <div class="num">0</div>
+            </div>
+        </div>
+
+        <!-- Uunkaa tblstudent -->
         <div class="form-container">
-            <h3 style="margin: 0; color: var(--primary); border-bottom: 2px solid #f1f5f9; padding-bottom: 10px;">Uunkaa Galmee Barattootaa</h3>
-            
-            <form id="studentForm" action="/galmeessi" method="POST" class="form-grid">
-                <div class="form-group"><label>Maqaa Barataa:</label><input type="text" name="Maqaa" required></div>
-                <div class="form-group"><label>Maqaa Abbaa:</label><input type="text" name="Maqaa_Abbaa" required></div>
-                <div class="form-group"><label>Maqaa Akaakayuu:</label><input type="text" name="Maqaa_Akaakayuu"></div>
-                <div class="form-group"><label>Saala:</label>
-                    <select name="Saala" required>
-                        <option value="Dhiira">Dhiira</option>
-                        <option value="Dubara">Dubara</option>
-                    </select>
-                </div>
-                <div class="form-group"><label>Umrii:</label><input type="number" name="Umrii"></div>
-                <div class="form-group"><label>Kutaa:</label><input type="text" name="Kutaa" placeholder="Fkn: 10ffaaA"></div>
-                <div class="form-group"><label>Aradaa:</label><input type="text" name="Aradaa"></div>
-                <div class="form-group"><label>Ganda:</label><input type="text" name="Ganda"></div>
-                <div class="form-group"><label>Bilbila:</label><input type="text" name="Bilbila"></div>
-                <div class="form-group"><label>FaydaAliasNumber:</label><input type="text" name="FaydaAliasNumber"></div>
+            <h3 style="margin: 0; color: var(--primary); border-bottom: 2px solid #f1f5f9; padding-bottom: 10px;">Uunkaa Galmee Barattootaa (tblstudent)</h3>
+            <form id="studentForm" class="form-grid">
+                <div class="form-group"><label>TL:</label><input type="text" placeholder="(Auto ID)" disabled></div>
+                <div class="form-group"><label>Umrii:</label><input type="number" id="Umrii" required></div>
+                <div class="form-group"><label>Maqaa:</label><input type="text" id="Maqaa" required></div>
+                <div class="form-group"><label>Kutaa:</label><input type="text" id="Kutaa" placeholder="Fkn: 10ffaaA" required></div>
+                <div class="form-group"><label>Maqaa Abbaa:</label><input type="text" id="Maqaa_Abbaa" required></div>
+                <div class="form-group"><label>Bara:</label><input type="text" id="Bara" value="2026-08-18" disabled></div>
+                <div class="form-group"><label>Maqaa Akaakayuu:</label><input type="text" id="Maqaa_Akaakayuu"></div>
+                <div class="form-group"><label>Aradaa:</label><input type="text" id="Aradaa"></div>
+                <div class="form-group"><label>Saala:</label><select id="Saala"><option value="Dhiira">Dhiira</option><option value="Dubara">Dubara</option></select></div>
+                <div class="form-group"><label>Ganda:</label><input type="text" id="Ganda"></div>
+                <div class="form-group"><label>Bilbila:</label><input type="text" id="Bilbila"></div>
+                <div class="form-group"><label>FaydaAliasNumber:</label><input type="text" id="FaydaAliasNumber"></div>
                 
                 <div class="actions">
-                    <button type="submit" class="btn btn-success">💾 Intarneetirratti Kuusi</button>
+                    <button type="reset" class="btn btn-primary">➕ Haaraa</button>
+                    <button type="button" class="btn btn-success" onclick="saveStudent()">💾 Kuusi & Save</button>
                 </div>
             </form>
         </div>
@@ -84,24 +108,39 @@
 </div>
 
 <script>
-    document.getElementById('studentForm').onsubmit = async (e) => {
-        e.preventDefault();
-        const formData = new FormData(e.target);
-        const data = Object.fromEntries(formData.entries());
-        
-        try {
-            const response = await fetch('/galmeessi', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
-            });
-            const text = await response.text();
-            alert(text);
-            if(response.ok) e.target.reset();
-        } catch (err) {
-            alert("Dogoggora wal-qunnamtii server: " + err.message);
+    // Koodii ragaa uunka irraa fuudhee gara Node.js'tti ergu (JavaScript API)
+    async function saveStudent() {
+        const studentData = {
+            Maqaa: document.getElementById('Maqaa').value,
+            Maqaa_Abbaa: document.getElementById('Maqaa_Abbaa').value,
+            Maqaa_Akaakayuu: document.getElementById('Maqaa_Akaakayuu').value,
+            Saala: document.getElementById('Saala').value,
+            Umrii: document.getElementById('Umrii').value,
+            Kutaa: document.getElementById('Kutaa').value,
+            Aradaa: document.getElementById('Aradaa').value,
+            Ganda: document.getElementById('Ganda').value,
+            Bilbila: document.getElementById('Bilbila').value,
+            FaydaAliasNumber: document.getElementById('FaydaAliasNumber').value
+        };
+
+        if(!studentData.Maqaa || !studentData.Maqaa_Abbaa) {
+            alert("Maaloo, dursa dirree Maqaa fi Maqaa Abbaa guutaa!");
+            return;
         }
-    };
+
+        const response = await fetch('/galmeessi', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(studentData)
+        });
+
+        if(response.ok) {
+            alert("Odeeffannoon barataa milkiin kuusaa deetaa online irratti kuufameera!");
+            document.getElementById('studentForm').reset();
+        } else {
+            alert("Dogoggorri uumameera, maaloo irra deebbi'aa yaala!");
+        }
+    }
 </script>
 </body>
 </html>
