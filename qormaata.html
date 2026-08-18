@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="om">
+<head>
+    <meta charset="UTF-8">
+    <title>Kutaa Qormaata Online - MBS Sheek Bakrii</title>
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f1f5f9; padding: 30px; }
+        .exam-container { max-width: 700px; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin: auto; }
+        h2 { color: #1e3a8a; text-align: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 15px; }
+        .question-block { margin-bottom: 25px; padding: 15px; border-bottom: 1px solid #f1f5f9; }
+        .question-text { font-size: 16px; font-weight: bold; margin-bottom: 10px; color: #1e293b; }
+        .option { display: block; margin: 8px 0; font-size: 15px; cursor: pointer; }
+        .btn-submit { display: block; width: 100%; padding: 12px; background-color: #16a34a; color: white; border: none; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 20px; }
+        .btn-submit:hover { background-color: #15803d; }
+        #result-box { display: none; margin-top: 20px; padding: 20px; background-color: #dcfce7; border-left: 5px solid #16a34a; border-radius: 6px; text-align: center; font-size: 18px; font-weight: bold; color: #14532d; }
+    </style>
+</head>
+<body>
+
+<div class="exam-container">
+    <h2>MBS Sheek Bakrii - Qormaata Online</h2>
+    <div id="exam-form"></div>
+    <button class="btn-submit" onclick="submitExam()">Qormaata Xumuri</button>
+    <div id="result-box"></div>
+</div>
+
+<script>
+    let gaaffileeGlobal = [];
+
+    // 1. Gaaffilee server irraa fiduu
+    async function loadQuestions() {
+        const response = await fetch('/api/qormaata');
+        gaaffileeGlobal = await response.json();
+        const container = document.getElementById('exam-form');
+        
+        gaaffileeGlobal.forEach((q, index) => {
+            container.innerHTML += `
+                <div class="question-block">
+                    <div class="question-text">${index + 1}. ${q.Gaaffii}</div>
+                    <label class="option"><input type="radio" name="q_${q.ID_Gaaffii}" value="A"> A. ${q.Filannoo_A}</label>
+                    <label class="option"><input type="radio" name="q_${q.ID_Gaaffii}" value="B"> B. ${q.Filannoo_B}</label>
+                    <label class="option"><input type="radio" name="q_${q.ID_Gaaffii}" value="C"> C. ${q.Filannoo_C}</label>
+                    <label class="option"><input type="radio" name="q_${q.ID_Gaaffii}" value="D"> D. ${q.Filannoo_D}</label>
+                </div>
+            `;
+        });
+    }
+
+    // 2. Qormaata xumuruu fi deebii madaaluu
+    async function submitExam() {
+        let deebiiBarataa = {};
+        gaaffileeGlobal.forEach(q => {
+            const selected = document.querySelector(`input[name="q_${q.ID_Gaaffii}"]:checked`);
+            deebiiBarataa[q.ID_Gaaffii] = selected ? selected.value : null;
+        });
+
+        const response = await fetch('/api/madaali', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ deebii: deebiiBarataa })
+        });
+
+        const result = await response.json();
+        const resultBox = document.getElementById('result-box');
+        resultBox.style.display = 'block';
+        resultBox.innerHTML = `Qormaataa Xumurtaniittu!<br>Qabxii: ${result.qabxii}/${result.waliigala} (${result.dhibbantaa})`;
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    loadQuestions();
+</script>
+</body>
+</html>
