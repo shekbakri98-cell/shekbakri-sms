@@ -4,42 +4,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MBS Sheek Bakrii - System Dashboard</title>
-    <!-- Mallattoolee FontAwesome fiduuf (Icons) -->
     <link rel="stylesheet" href="https://cloudflare.com">
     <style>
         :root {
             --primary-dark: #0077b6;
             --secondary-blue: #0096c7;
-            --hover-blue: #03045e;
+            --success: #16a34a;
             --bg-light: #f8fafc;
             --text-dark: #1e293b;
         }
         body { font-family: 'Segoe UI', Arial, sans-serif; background-color: var(--bg-light); margin: 0; padding: 0; color: var(--text-dark); }
         .dashboard-layout { display: grid; grid-template-columns: 260px 1fr; min-height: 100vh; }
         
-        /* --- DIZAAYINII SIDEBAR MENUCHA (Akkuma Fakkii Keessanii) --- */
+        /* Sidebar Menu */
         .sidebar { background-color: #0096c7; color: white; padding: 0; box-shadow: 3px 0 15px rgba(0,0,0,0.1); }
         .sidebar-brand { font-size: 14px; font-weight: bold; padding: 15px 20px; background-color: #0077b6; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid rgba(255,255,255,0.1); }
         .menu-list { list-style: none; padding: 0; margin: 0; }
         .menu-item { display: flex; align-items: center; width: 100%; padding: 12px 20px; background: none; border: none; color: white; text-align: left; font-size: 15px; cursor: pointer; transition: all 0.2s ease; box-sizing: border-box; }
         .menu-item i { width: 25px; font-size: 16px; margin-right: 12px; text-align: center; }
-        
-        /* Qabduu amma irra jiran adii gochuuf (Active state) */
         .menu-item.active { background-color: white; color: #0077b6; font-weight: 600; }
         .menu-item:hover:not(.active) { background-color: #0077b6; }
 
-        /* Main Content View */
+        /* Main Content */
         .main-content { padding: 30px; }
         .header { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; }
         .header h1 { margin: 0; font-size: 22px; color: #0077b6; }
         
-        /* Container Form */
-        .form-container { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        /* Containers */
+        .form-container { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); display: none; }
+        .form-container.active { display: block; }
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
         .form-group { display: flex; flex-direction: column; }
+        .form-group.full-width { grid-column: span 2; }
         label { margin-bottom: 6px; font-weight: 600; font-size: 14px; color: #475569; }
-        input, select { padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; background-color: #f8fafc; }
-        input:focus, select:focus { border-color: var(--secondary-blue); outline: none; background-color: white; box-shadow: 0 0 0 3px rgba(0,150,199,0.15); }
+        input, select, textarea { padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; background-color: #f8fafc; }
+        input:focus, select:focus, textarea:focus { border-color: var(--secondary-blue); outline: none; background-color: white; box-shadow: 0 0 0 3px rgba(0,150,199,0.15); }
         .actions { grid-column: span 2; display: flex; justify-content: flex-end; gap: 15px; margin-top: 15px; padding-top: 15px; border-top: 1px solid #e2e8f0; }
         .btn { padding: 10px 24px; border: none; border-radius: 6px; font-size: 14px; font-weight: bold; cursor: pointer; transition: 0.2s; }
         .btn-primary { background-color: #0096c7; color: white; }
@@ -49,21 +48,14 @@
 <body>
 
 <div class="dashboard-layout">
-    <!-- SIDEBAR LEFT (Akkuma fakkii keessanii dhibba dhibbatti) -->
+    <!-- SIDEBAR LEFT -->
     <div class="sidebar">
         <div class="sidebar-brand">Business Process OutSourcing</div>
         <div class="menu-list">
-            <button class="menu-item active"><i class="fa-solid fa-house"></i> Dashboard</button>
-            <button class="menu-item"><i class="fa-solid fa-layer-group"></i> Masters</button>
-            <button class="menu-item"><i class="fa-solid fa-user-graduate"></i> Students</button>
-            <button class="menu-item"><i class="fa-solid fa-users"></i> HR</button>
-            <button class="menu-item"><i class="fa-solid fa-fingerprint"></i> Biometric</button>
-            <button class="menu-item"><i class="fa-solid fa-clipboard-user"></i> Attendance</button>
+            <button class="menu-item active" onclick="switchTab('box-dashboard', this)"><i class="fa-solid fa-house"></i> Dashboard</button>
+            <button class="menu-item" onclick="switchTab('box-attendance', this)"><i class="fa-solid fa-clipboard-user"></i> Attendance</button>
             <button class="menu-item" onclick="window.location.href='/qormaata'"><i class="fa-solid fa-file-signature"></i> Exams</button>
-            <button class="menu-item"><i class="fa-solid fa-money-check-dollar"></i> Fees</button>
-            <button class="menu-item"><i class="fa-solid fa-wallet"></i> Pocket Money</button>
-            <button class="menu-item"><i class="fa-solid fa-calculator"></i> Accounts</button>
-            <button class="menu-item"><i class="fa-solid fa-envelope"></i> SMS Service</button>
+            <button class="menu-item" onclick="switchTab('box-sms', this)"><i class="fa-solid fa-envelope"></i> SMS Service</button>
             <button class="menu-item"><i class="fa-solid fa-gear"></i> Settings</button>
         </div>
     </div>
@@ -75,65 +67,97 @@
             <div style="font-size: 14px; color: #64748b;">Barsiisaa: <b>Anwaar</b></div>
         </div>
 
-        <!-- Uunkaa Galmee Barattootaa -->
-        <div class="form-container">
+        <!-- 1. SAANDUQA GALMEESSA BARATAA (Dashboard Home) -->
+        <div id="box-dashboard" class="form-container active">
             <h3 style="margin: 0; color: #0077b6; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px;">Uunkaa Galmee Barattootaa (tblstudent)</h3>
             <form id="studentForm" class="form-grid">
-                <div class="form-group"><label>TL:</label><input type="text" placeholder="(Auto ID)" disabled></div>
-                <div class="form-group"><label>Umrii:</label><input type="number" id="Umrii" required></div>
                 <div class="form-group"><label>Maqaa Barataa:</label><input type="text" id="Maqaa" required></div>
-                <div class="form-group"><label>Kutaa:</label><input type="text" id="Kutaa" placeholder="Fkn: 11Natural" required></div>
                 <div class="form-group"><label>Maqaa Abbaa:</label><input type="text" id="Maqaa_Abbaa" required></div>
-                <div class="form-group"><label>Bara:</label><input type="text" id="Bara" value="2026-08-18" disabled></div>
-                <div class="form-group"><label>Maqaa Akaakayuu:</label><input type="text" id="Maqaa_Akaakayuu"></div>
-                <div class="form-group"><label>Aradaa:</label><input type="text" id="Aradaa"></div>
+                <div class="form-group"><label>Kutaa:</label><input type="text" id="Kutaa" required></div>
                 <div class="form-group"><label>Saala:</label><select id="Saala"><option value="Dhiira">Dhiira</option><option value="Dubara">Dubara</option></select></div>
-                <div class="form-group"><label>Ganda:</label><input type="text" id="Ganda"></div>
-                <div class="form-group"><label>Bilbila:</label><input type="text" id="Bilbila"></div>
                 <div class="form-group"><label>FaydaAliasNumber:</label><input type="text" id="FaydaAliasNumber"></div>
-                
-                <div class="actions">
-                    <button type="reset" class="btn btn-primary">➕ Haaraa</button>
-                    <button type="button" class="btn btn-success" onclick="saveStudent()">💾 Kuusi & Save</button>
-                </div>
+                <div class="actions"><button type="button" class="btn btn-success" onclick="saveStudent()">💾 Barataa Save</button></div>
+            </form>
+        </div>
+
+        <!-- 2. SAANDUQA ATTENDANCE (Haaraa) -->
+        <div id="box-attendance" class="form-container">
+            <h3 style="margin: 0; color: #0077b6; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px;">Uunkaa Hordoffii Barataa (Attendance)</h3>
+            <form id="attendanceForm" class="form-grid">
+                <div class="form-group"><label>ID Barataa:</label><input type="number" id="Att_Barataa_ID" required></div>
+                <div class="form-group"><label>Kutaa:</label><input type="text" id="Att_Kutaa"></div>
+                <div class="form-group"><label>Guyyaa:</label><input type="date" id="Att_Guyyaa" value="2026-08-18"></div>
+                <div class="form-group"><label>Haala Seensa (Status):</label><select id="Att_Status"><option value="Present">Present (Of-jira)</option><option value="Absent">Absent (Safeera)</option><option value="Late">Late (Barfateera)</option></select></div>
+                <div class="actions"><button type="button" class="btn btn-success" onclick="saveAttendance()">💾 Attendance Kuusi</button></div>
+            </form>
+        </div>
+
+        <!-- 3. SAANDUQA SMS SERVICE (Haaraa) -->
+        <div id="box-sms" class="form-container">
+            <h3 style="margin: 0; color: #0077b6; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px;">Uunkaa SMS Service (Ergaa Gabaabaa)</h3>
+            <form id="smsForm" class="form-grid">
+                <div class="form-group full-width"><label>Lakk_Bilbila Maatii:</label><input type="text" id="SMS_Bilbila" placeholder="Fkn: 0912345678" required></div>
+                <div class="form-group full-width"><label>Barruu Ergaa (Message Text):</label><textarea id="SMS_Barruu" rows="4" placeholder="Barruu ergaa asitti barreessi..." required></textarea></div>
+                <div class="actions"><button type="button" class="btn btn-success" onclick="sendSMS()">📩 Ergaa SMS Ergi</button></div>
             </form>
         </div>
     </div>
 </div>
 
 <script>
-    // API ragaa kuusuuf (JavaScript)
+    // Tab switching logic
+    function switchTab(tabId, buttonElement) {
+        document.querySelectorAll('.form-container').forEach(box => box.classList.remove('active'));
+        document.querySelectorAll('.menu-item').forEach(btn => btn.classList.remove('active'));
+        document.getElementById(tabId).classList.add('active');
+        buttonElement.classList.add('active');
+    }
+
+    // Attendance Save Function
+    async function saveAttendance() {
+        const attData = {
+            Barataa_ID: document.getElementById('Att_Barataa_ID').value,
+            Kutaa: document.getElementById('Att_Kutaa').value,
+            Guyyaa: document.getElementById('Att_Guyyaa').value,
+            Haala_Seensa: document.getElementById('Att_Status').value
+        };
+        const response = await fetch('/api/attendance', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(attData)
+        });
+        if(response.ok) { alert(await response.text()); document.getElementById('attendanceForm').reset(); }
+    }
+
+    // SMS Send Function
+    async function sendSMS() {
+        const smsData = {
+            Lakk_Bilbila: document.getElementById('SMS_Bilbila').value,
+            Barruu_Ergaa: document.getElementById('SMS_Barruu').value
+        };
+        const response = await fetch('/api/send-sms', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(smsData)
+        });
+        if(response.ok) { alert(await response.text()); document.getElementById('smsForm').reset(); }
+    }
+
+    // Student Save Function
     async function saveStudent() {
         const studentData = {
             Maqaa: document.getElementById('Maqaa').value,
             Maqaa_Abbaa: document.getElementById('Maqaa_Abbaa').value,
-            Maqaa_Akaakayuu: document.getElementById('Maqaa_Akaakayuu').value,
             Saala: document.getElementById('Saala').value,
-            Umrii: document.getElementById('Umrii').value,
             Kutaa: document.getElementById('Kutaa').value,
-            Aradaa: document.getElementById('Aradaa').value,
-            Ganda: document.getElementById('Ganda').value,
-            Bilbila: document.getElementById('Bilbila').value,
             FaydaAliasNumber: document.getElementById('FaydaAliasNumber').value
         };
-
-        if(!studentData.Maqaa || !studentData.Maqaa_Abbaa) {
-            alert("Maaloo, dursa dirree Maqaa fi Maqaa Abbaa guutaa!");
-            return;
-        }
-
         const response = await fetch('/galmeessi', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(studentData)
         });
-
-        if(response.ok) {
-            alert("Odeeffannoon barataa milkiin kuusaa deetaa online irratti kuufameera!");
-            document.getElementById('studentForm').reset();
-        } else {
-            alert("Dogoggorri uumameera, maaloo irra deebbi'aa yaala!");
-        }
+        if(response.ok) { alert("Odeeffannoon barataa milkiin kuufameera!"); document.getElementById('studentForm').reset(); }
     }
 </script>
 </body>
