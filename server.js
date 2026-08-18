@@ -52,7 +52,26 @@ app.post('/galmeessi', (req, res) => {
         req.body.Bilbila, 
         req.body.FaydaAliasNumber
     ];
+app.post('/api/attendance', (req, res) => {
+    const { Barataa_ID, Guyyaa, Haala_Seensa, Kutaa } = req.body;
+    const sql = "INSERT INTO tbl_Attendance (Barataa_ID, Guyyaa, Haala_Seensa, Kutaa) VALUES (?, ?, ?, ?)";
+    db.query(sql, [Barataa_ID, Guyyaa, Haala_Seensa, Kutaa], (err, result) => {
+        if (err) return res.status(500).send("Dogoggora Attendance: " + err.message);
+        res.send("Hordoffiin seensa barataa milkiin kuufameera!");
+    });
+});
 
+// --- SADDARKAA SMS SERVICE API ---
+app.post('/api/send-sms', (req, res) => {
+    const { Lakk_Bilbila, Barruu_Ergaa } = req.body;
+    const sql = "INSERT INTO tbl_SMSService (Lakk_Bilbila, Barruu_Ergaa) VALUES (?, ?)";
+    db.query(sql, [Lakk_Bilbila, Barruu_Ergaa], (err, result) => {
+        if (err) return res.status(500).send("Dogoggora SMS: " + err.message);
+        
+        // Hubachiisa: Hojii dhugaa irratti as jidduutti Twilio ykn Africa's Talking API hidhama
+        res.send("Ergaan gabaabaa (SMS) milkiin gara lakk " + Lakk_Bilbila + " tti ergameera!");
+    });
+});
     db.query(sql, values, (err, result) => {
         if (err) {
             return res.status(500).send("Dogoggora ragaa kuusuu: " + err.message);
