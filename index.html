@@ -1,155 +1,267 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="om">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shek Bekri Sapalo Secondary School</title>
+    <title>Shek Bekri Sapalo Secondary School - Examination System</title>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background-color: #7c5295; color: #fff; font-family: sans-serif; min-height: 100vh; display: flex; flex-direction: column; }
-        #loginPage { display: flex; align-items: center; justify-content: center; min-height: 100vh; }
-        .login-box { background-color: #7c5295; padding: 30px; border: 3px solid #000; width: 100%; max-width: 440px; }
-        .login-banner { background-color: #ffedd5; color: #7c5295; font-size: 2.3rem; font-weight: bold; text-align: center; padding: 12px; margin-bottom: 20px; }
-        .access-group { display: flex; align-items: center; margin-bottom: 12px; gap: 10px; }
-        .access-group label { width: 120px; background-color: #ffedd5; color: #475569; padding: 8px; font-weight: bold; font-size: 0.9rem; }
-        .access-group input, .access-group select, .access-group textarea { flex: 1; padding: 8px; border: 2px solid #cbd5e1; color: #000; background-color: #fff; outline: none; }
-        .btn-access-login { width: 100%; background-color: #0ea5e9; color: #000; padding: 10px; border: 2px solid #000; font-size: 1.3rem; font-weight: bold; cursor: pointer; }
-        #appPage { display: none; flex-direction: column; flex: 1; }
-        header { background-color: #0ea5e9; color: #000; font-size: 1.3rem; font-weight: 900; padding: 12px; border-bottom: 3px solid #000; }
-        .app-container { display: flex; flex: 1; }
-        nav { width: 240px; background-color: #4a2e6d; padding: 15px; display: flex; flex-direction: column; gap: 10px; }
-        .btn-nav-access { width: 100%; background-color: #84cc16; color: #000; font-weight: bold; padding: 10px; border: 2px solid #000; cursor: pointer; }
-        .btn-nav-orange { background-color: #f97316; }
-        .btn-nav-yellow { background-color: #eab308; }
-        .btn-nav-close { background-color: #b91c1c; color: #fff; margin-top: 20px; }
-        main { flex: 1; padding: 25px; background-color: #7c5295; overflow-y: auto; }
-        .hidden { display: none !important; }
-        .school-banner { background-color: #a3e635; color: #000; font-size: 1.5rem; font-weight: bold; padding: 10px; text-align: center; border: 2px solid #000; margin-bottom: 20px; max-width: 500px; }
-        .stat-container { display: flex; flex-direction: column; gap: 10px; max-width: 350px; }
-        .stat-row { display: flex; align-items: center; gap: 15px; }
-        .stat-label { width: 120px; background-color: #f97316; color: #fff; font-weight: bold; padding: 6px; text-align: center; }
-        .stat-value { width: 80px; background-color: #ffedd5; color: #0ea5e9; font-weight: 900; font-size: 1.3rem; text-align: center; }
-        .access-panel { background-color: #cbd5e1; color: #000; border: 2px solid #000; padding: 20px; width: 100%; max-width: 700px; margin: 0 auto; }
-        .panel-header { background-color: #facc15; color: #000; font-size: 1.3rem; font-weight: bold; padding: 8px; text-align: center; margin-bottom: 15px; }
-        .panel-header-green { background-color: #84cc16; color: #fff; }
-        .panel-footer-actions { display: flex; gap: 8px; margin-top: 15px; }
-        .btn-action-flat { padding: 8px 16px; font-weight: bold; background-color: #e2e8f0; color: #000; cursor: pointer; border: 1px solid #000; }
-        .exam-timer-box { background-color: #facc15; color: #000; font-weight: 900; font-size: 1.5rem; padding: 6px 20px; border: 1px solid #000; text-align: center; margin-bottom: 15px; }
-        .quiz-content-area { background-color: #fff; padding: 15px; margin-top: 15px; border: 1px solid #000; color: #000; }
-        .opt-btn { width: 100%; text-align: left; padding: 10px; background-color: #f8fafc; border: 1px solid #cbd5e1; color: #000; margin-bottom: 6px; cursor: pointer; }
+        :root {
+            --primary: #4CAF50;
+            --secondary: #FFC107;
+            --danger: #F44336;
+            --dark: #2C3E50;
+            --light: #F8F9FA;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .header {
+            background-color: var(--dark);
+            color: #00e5ff;
+            padding: 20px;
+            text-align: center;
+            font-size: 22px;
+            font-weight: bold;
+            border-bottom: 4px solid var(--primary);
+        }
+        .sub-header {
+            background-color: var(--primary);
+            color: white;
+            padding: 12px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: 500;
+        }
+        .content {
+            padding: 25px;
+        }
+        .form-group {
+            margin-bottom: 18px;
+        }
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        select, input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #bdc3c7;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 15px;
+        }
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .timer-box {
+            background-color: #34495e;
+            color: #ffeb3b;
+            padding: 15px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        .quiz-section {
+            background: var(--light);
+            border-left: 5px solid var(--primary);
+            padding: 20px;
+            border-radius: 6px;
+            margin-top: 20px;
+            display: none;
+        }
+        .options-group {
+            margin-top: 15px;
+        }
+        .option-label {
+            display: block;
+            background: white;
+            padding: 12px;
+            margin-bottom: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .option-label:hover {
+            border-color: var(--primary);
+            background: #e8f5e9;
+        }
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            width: 100%;
+            margin-top: 15px;
+        }
+        .btn-danger { background-color: var(--danger); }
+        .btn-warning { background-color: var(--secondary); color: black; }
+        
+        /* Stats dashboard mock style matching screenshot color context */
+        .sidebar-mock {
+            background: #7b1fa2;
+            padding: 15px;
+            border-radius: 8px;
+            color: white;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
 
-    <div id="loginPage">
-        <div class="login-box">
-            <div class="login-banner">WELCOM</div>
-            <div class="access-group">
-                <label>Username</label>
-                <input type="text" id="loginUser" value="admin">
+<div class="container">
+    <div class="header">
+        Mana Barnoota Sheek Bakrii Saphaloo Sad.2ffaa (Shek Bekri Sapalo Secondary School)
+    </div>
+    
+    <div class="content">
+        <!-- Student Info Section -->
+        <div class="sidebar-mock">
+            <h3 style="margin-top:0;">Odeeffannoo Barataa</h3>
+            <div class="grid-3" style="grid-template-columns: 1fr 2fr;">
+                <div class="form-group">
+                    <label style="color:white;">ID Barataa:</label>
+                    <input type="number" id="idBarataa" placeholder="Fkn. 124">
+                </div>
+                <div class="form-group">
+                    <label style="color:white;">Maqaa Barataa:</label>
+                    <input type="text" id="txtMaqaaBarataa" placeholder="Maqaa Guutuu">
+                </div>
             </div>
-            <div class="access-group">
-                <label>Password</label>
-                <input type="password" id="loginPass" value="admin123">
+        </div>
+
+        <!-- Filter / Criteria Section -->
+        <div class="grid-3">
+            <div class="form-group">
+                <label for="cboKutaa">Filadhu Kutaa:</label>
+                <select id="cboKutaa">
+                    <option value="">-- Kutaa --</option>
+                    <option value="9">Kutaa 9</option>
+                    <option value="10">Kutaa 10</option>
+                    <option value="11">Kutaa 11</option>
+                    <option value="12">Kutaa 12</option>
+                </select>
             </div>
-            <button type="button" onclick="kallattiinSeensi()" class="btn-access-login">Login</button>
+            <div class="form-group">
+                <label for="cboGosaBarnootaa">Gosa Barnootaa:</label>
+                <select id="cboGosaBarnootaa">
+                    <option value="">-- Barnoota --</option>
+                    <option value="Afan_Oromo">Afaan Oromoo</option>
+                    <option value="Mathematics">Mathematics</option>
+                    <option value="Physics">Physics</option>
+                    <option value="English">English</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="cboGosaQormaataa">Gosa Qormaataa:</label>
+                <select id="cboGosaQormaataa">
+                    <option value="">-- Qormaata --</option>
+                    <option value="Mid_Exam">Mid Exam</option>
+                    <option value="Final_Exam">Final Exam</option>
+                </select>
+            </div>
+        </div>
+
+        <button class="btn btn-warning" onclick="gaaffiiFilterGodhi()">Qormaata Jalqabsiisi (Filter)</button>
+
+        <!-- Live Timer Display -->
+        <div class="timer-box" id="timerBox">Yeroo Hafe: 20:00</div>
+
+        <!-- Quiz Panel UI -->
+        <div class="quiz-section" id="quizSection">
+            <h3 id="questionText">Gaaffii 1: ...</h3>
+            <div class="options-group">
+                <label class="option-label"><input type="radio" name="quizOption" value="A"> <span id="optA">Filannoo A</span></label>
+                <label class="option-label"><input type="radio" name="quizOption" value="B"> <span id="optB">Filannoo B</span></label>
+                <label class="option-label"><input type="radio" name="quizOption" value="C"> <span id="optC">Filannoo C</span></label>
+                <label class="option-label"><input type="radio" name="quizOption" value="D"> <span id="optD">Filannoo D</span></label>
+            </div>
+            
+            <div style="display:flex; gap:15px;">
+                <button class="btn" onclick="btnIttiAanuClick()">Itti Aanu ➔</button>
+                <button class="btn btn-danger" onclick="btnXumuriClick()">Xumuri ✖</button>
+            </div>
         </div>
     </div>
+</div>
 
-    <div id="appPage">
-        <header>
-            Mana Barnoota Sheek Bakrii Saphaloo Sad.2ffaa (Shek Bekri Sapalo Secondary School)
-        </header>
+<script>
+    // Fakkkeenya Gaaffilee Mock Data (Database bakka bu'uuf)
+    const databaseGaaffilee = [
+        { id: 1, kutaa: "9", barnoota: "Afan_Oromo", qormaata: "Mid_Exam", text: "Hiikni jecha 'Saphaloo' jedhu maali?", a: "Hayyuu", b: "Mataa", c: "Tulluu", d: "Haaraa" },
+        { id: 2, kutaa: "9", barnoota: "Afan_Oromo", qormaata: "Mid_Exam", text: "Afaan Oromoo keessatti dubbifamtootni meeqa?", a: "26", b: "31", c: "5", d: "10" },
+        { id: 3, kutaa: "10", barnoota: "Mathematics", qormaata: "Final_Exam", text: "Find x if 2x + 5 = 15.", a: "5", b: "10", c: "15", d: "2" }
+    ];
 
-        <div class="app-container">
-            <nav>
-                <button onclick="showSection('dashboardSection')" class="btn-nav-access">Dashboard</button>
-                <button onclick="showSection('studentRegSection')" class="btn-nav-access btn-nav-yellow">Galmeesi</button>
-                <button onclick="showSection('teacherExamSection')" class="btn-nav-access btn-nav-yellow">Gara_Unka_Barsiisaa</button>
-                <button onclick="showSection('studentExamSection')" class="btn-nav-access btn-nav-orange">Gara Qormaata Barataan</button>
-                <button onclick="showSection('createUserSection')" class="btn-nav-access btn-nav-orange">Frm_CreateUser</button>
-                <button onclick="logout()" class="btn-nav-access btn-nav-close">Cufi</button>
-            </nav>
+    // LocalStorage irratti deebii kuusuuf fi ittisa hordofuuf
+    let filteredQuestions = [];
+    let currentIdx = 0;
+    let totalSeconds = 1200; // Daqiiqaa 20
+    let timerInterval = null;
+    let deebiiBarataaCollection = [];
 
-            <main>
-                <section id="dashboardSection">
-                    <div class="school-banner">Shek Bekri Sapalo secodeery School</div>
-                    <div style="display: flex; gap: 30px; flex-wrap: wrap;">
-                        <div class="stat-container">
-                            <div class="stat-row"><div class="stat-label">Waliig. 6</div><div class="stat-value">124</div></div>
-                            <div class="stat-row"><div class="stat-label">Dhiira 5</div><div class="stat-value">68</div></div>
-                            <div class="stat-row"><div class="stat-label">Dubar 1</div><div class="stat-value">56</div></div>
-                        </div>
-                        <div class="stat-container">
-                            <div class="stat-row"><div class="stat-label" style="background:#d97706;">Kutaa9 1</div><div class="stat-value">34</div></div>
-                            <div class="stat-row"><div class="stat-label" style="background:#d97706;">Kutaa10 2</div><div class="stat-value">40</div></div>
-                            <div class="stat-row"><div class="stat-label" style="background:#d97706;">Kutaa11 1</div><div class="stat-value">28</div></div>
-                            <div class="stat-row"><div class="stat-label" style="background:#d97706;">Kutaa12 2</div><div class="stat-value">22</div></div>
-                        </div>
-                    </div>
-                </section>
+    function gaaffiiFilterGodhi() {
+        const idBarataa = document.getElementById('idBarataa').value;
+        const maqaa = document.getElementById('txtMaqaaBarataa').value;
+        const kutaa = document.getElementById('cboKutaa').value;
+        const barnoota = document.getElementById('cboGosaBarnootaa').value;
+        const qormaata = document.getElementById('cboGosaQormaataa').value;
 
-                <section id="studentRegSection" class="hidden">
-                    <div class="access-panel" style="background-color: #fed7aa;">
-                        <div class="panel-header" style="background:none; color:#000; font-size:1.5rem;">Barattoota Kee Lakkfi Maqaa Barreessi</div>
-                        <div class="access-group"><label>ID_Barataa</label><input type="text" placeholder="(New)" readonly></div>
-                        <div class="access-group"><label>Maqaa_Barataa</label><input type="text"></div>
-                        <div class="access-group"><label>Kutaa</label><select><option>Kutaa 9</option><option>Kutaa 10</option><option>Kutaa 11</option><option>Kutaa 12</option></select></div>
-                        <div class="panel-footer-actions">
-                            <button onclick="alert('Haaraa!')" class="btn-action-flat" style="background:#eab308;">Haaraa galmeessi</button>
-                            <button onclick="alert('Kuusameera!')" class="btn-action-flat" style="background:#22c55e; color:#fff;">Save</button>
-                            <button onclick="showSection('dashboardSection')" class="btn-action-flat" style="background:#f97316; color:#fff;">Close</button>
-                        </div>
-                    </div>
-                </section>
-
-                <section id="teacherExamSection" class="hidden">
-                    <div class="access-panel">
-                        <div class="panel-header">Foormii Barsiisaan Gaaffii Itti Barreessu</div>
-                        <div class="access-group"><label>ID_Qormaata</label><input type="text"></div>
-                        <div class="access-group"><label>Gosa_Barnootaa</label><input type="text"></div>
-                        <div class="access-group"><label>Gaaffii</label><textarea style="height:60px;"></textarea></div>
-                        <div class="access-group"><label>Filannoo_A</label><input type="text"></div>
-                        <div class="access-group"><label>Filannoo_B</label><input type="text"></div>
-                        <div class="access-group"><label>Deebii_Sirrii</label><input type="text" placeholder="A ykn B"></div>
-                        <div class="panel-footer-actions">
-                            <button onclick="alert('Kuusameera!')" class="btn-action-flat" style="background:#22c55e; color:#fff;">Save</button>
-                            <button onclick="showSection('dashboardSection')" class="btn-action-flat" style="background:#f97316; color:#fff;">Close Form</button>
-                        </div>
-                    </div>
-                </section>
-
-                <section id="studentExamSection" class="hidden">
-                    <div class="access-panel" style="background-color: #ebdcf7;">
-                        <div class="exam-timer-box">Yeroo Hafe: <span id="timer">20:00</span></div>
-                        <div class="access-group"><label>IDBarataa</label><input type="text" id="examStudId"></div>
-
-    <script>
-        function kallattiinSeensi() {
-            var u = document.getElementById('loginUser').value.trim();
-            var p = document.getElementById('loginPass').value.trim();
-            if(u === "admin" && p === "admin123") {
-                document.getElementById('loginPage').style.display = 'none';
-                document.getElementById('appPage').style.display = 'flex';
-                showSection('dashboardSection');
-            } else {
-                alert("Username ykn Password dogoggora!");
-            }
+        if(!idBarataa || !maqaa) {
+            alert("Maaloo dursitanii ID fi Maqaa Barataa galchaa!");
+            return;
         }
-        function showSection(id) {
-            ['dashboardSection', 'studentRegSection', 'teacherExamSection', 'studentExamSection'].forEach(function(s) {
-                var el = document.getElementById(s); if(el) el.classList.add('hidden');
-            });
-            var active = document.getElementById(id); if(active) active.classList.remove('hidden');
-            var btns = document.querySelectorAll('nav .btn-nav');
-            btns.forEach(function(b) { b.classList.remove('active'); });
-            var map = {'dashboardSection':'nav-dashboard','studentRegSection':'nav-student','teacherExamSection':'nav-teacher','studentExamSection':'nav-exam'};
-            var activeBtn = document.getElementById(map[id]); if(activeBtn) activeBtn.classList.add('active');
+
+        // --- ITTISA QORMAATA DAACHAA (Double-Take Prevention) ---
+        // Barataan sun qormaata sana kanaan dura fudhachuu isaa qulqulleessa
+        let duraanFudhateera = localStorage.getItem(`fudhatame_${idBarataa}_${barnoota}`);
+        if(duraanFudhateera) {
+            alert(`Barataan kun qormaata '${barnoota}' duraan fudhateera! Yeroo lama fudhachuun hin danda'amu.`);
+            return;
         }
-        function logout() {
-            document.getElementById('appPage').style.display = 'none';
-            document.getElementById('loginPage').style.display = 'flex';
-        }
-    </script>
-</body>
-</html>
+
+        // Calaluu (Filter Logic)
+        filteredQuestions = databaseGaaffilee.filter(q => 
+            (kutaa === "" || q.kutaa === kutaa) &&
+            (barnoota === "" || q.barnoota === barnoota) &&
+            (qormaata === "" || q.qormaata === qormaata)
+        );
+
+        if(filteredQuestions.length > 0) {
+            currentIdx = 0;
+            displayQuestion();
+            document.getElementById('quizSection').style.display = 'block';
+            document.getElementById('timerBox').style.display = 'block';
+            
+            // Timer Jalqabsiisi
+            totalSeconds = 1200;
+            clearInterval(timerInterval);
+            timerInterval = setInterval(formTimer, 1000);
+        } else {
+            alert("Ulaagaa kanaan gaaffiin qophaa'e hin jiru!");
+          document.getElementById('quizSection').style.display = 'none';}}function displayQuestion() {if(currentIdx < filteredQuestions.length) {const q = filteredQuestions[currentIdx];document.getElementById('questionText').innerText = Gaaffii ${currentIdx + 1}: ${q.text};document.getElementById('optA').innerText = q.a;document.getElementById('optB').innerText = q.b;document.getElementById('optC').innerText = q.c;document.getElementById('optD').innerText = q.d;// Radio button qulqulleessiconst ele = document.getElementsByName("quizOption");for(let i=0;i<ele.length;i++) ele[i].checked = false;}}function btnIttiAanuClick() {const options = document.getElementsByName("quizOption");let selectedValue = null;for(let i=0; i<options.length; i++) {if(options[i].checked) selectedValue = options[i].value;}if(!selectedValue) {alert("Maaloo odoo gara gaaffii itti aanutti hin dabarre deebii filadhu!");return;}// Deebii kuusiconst idBarataa = document.getElementById('idBarataa').value;const currentQuestion = filteredQuestions[currentIdx];deebiiBarataaCollection.push({idBarataa: idBarataa,idGaaffii: currentQuestion.id,deebii: selectedValue});currentIdx++;if(currentIdx < filteredQuestions.length) {displayQuestion();} else {alert("Gaaffii dhumaa bira geessaniittu. Maaloo 'Xumuri' kan jedhu cuqaasaa!");}}function btnXumuriClick() {if(deebiiBarataaCollection.length === 0) {alert("Barataan kun gaaffii tokkollee hin deebisne!");return;}const idBarataa = document.getElementById('idBarataa').value;const barnoota = document.getElementById('cboGosaBarnootaa').value;// Mallattoo qormaata fudhatamee mirkaneessi (Localstorage)localStorage.setItem(fudhatame_${idBarataa}_${barnoota}, "true");clearInterval(timerInterval);document.getElementById('quizSection').style.display = 'none';document.getElementById('timerBox').style.display = 'none';alert("Qormaanni keessan milkaa'inaan xumurameera! Bu'aan keessan herregameera.");console.log("Deebiiwwan Gara Database Deeman:", deebiiBarataaCollection);}function formTimer() {totalSeconds--;let mins = Math.floor(totalSeconds / 60);let secs = totalSeconds % 60;secs = secs < 10 ? '0' + secs : secs;document.getElementById('timerBox').innerText = Yeroo Hafe: ${mins}:${secs};if(totalSeconds <= 0) {clearInterval(timerInterval);alert("Yeroon qormaataa keessanii xumurameera! Qormaanni keessan ofiin xumurama.");btnXumuriClick();}}
